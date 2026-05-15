@@ -1400,6 +1400,170 @@ footer {
 ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
+/* --- HERO PREMISE --- */
+.hero-premise {
+  max-width: 680px;
+  margin: 0.8rem auto 0;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-style: italic;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid var(--border-strong);
+  color: var(--gold);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  padding: 0.15em 0.7em;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 0.3em;
+}
+
+/* --- WORLD STRATEGY NOTE --- */
+.world-strategy-note {
+  max-width: 820px;
+  margin: 0 auto 4rem;
+  padding: 2rem 2.5rem;
+  background: rgba(201,168,76,0.04);
+  border-left: 3px solid var(--gold-dark);
+  border-radius: 0 4px 4px 0;
+}
+
+.world-strategy-note p {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.world-strategy-note p:last-child { margin-bottom: 0; }
+
+.world-mystery {
+  color: var(--text-bright) !important;
+  font-style: italic;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  margin-top: 0.5rem !important;
+}
+
+/* --- RACE WEAKNESS --- */
+.race-weakness {
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  color: #a08060;
+  font-style: italic;
+  line-height: 1.5;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding-top: 0.6rem;
+}
+
+/* --- TIMELINE FRAGMENT (conspiracy tease) --- */
+.timeline-fragment {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-left: 3px solid var(--crimson);
+  border-radius: 0 4px 4px 0;
+}
+
+.fragment-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-style: italic;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+}
+
+.fragment-text {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-bright);
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+}
+
+/* --- PLAYER JOURNEY --- */
+.player-journey {
+  max-width: 820px;
+  margin: 0 auto 4rem;
+  padding: 2.5rem;
+  background: rgba(201,168,76,0.03);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.journey-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.player-journey p {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.player-journey p:last-child { margin-bottom: 0; }
+
+/* --- HIDDEN VICTORY PATH --- */
+.victory-hidden {
+  margin-top: 2.5rem;
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.victory-hidden p {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+
+.victory-hidden-sub {
+  font-family: var(--font-body);
+  font-size: 0.9rem !important;
+  font-style: italic;
+  color: var(--text-dim) !important;
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
+}
+
+/* --- DEV LOG PHILOSOPHY --- */
+.devlog-philosophy {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+  padding: 1.2rem 1.8rem;
+  background: rgba(201,168,76,0.04);
+  border-left: 3px solid var(--gold-dark);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* --- FOOTER DESC --- */
+.footer-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+
 /* --- RESPONSIVE --- */
 @media (max-width: 900px) {
   .nav-links { display: none; }

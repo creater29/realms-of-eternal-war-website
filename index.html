@@ -24,7 +24,7 @@
         <li><a href="#world">The World</a></li>
         <li><a href="#races">The Races</a></li>
         <li><a href="#story">The Story</a></li>
-        <li><a href="#gameplay">Gameplay</a></li>
+        <li><a href="#gameplay">Systems</a></li>
         <li><a href="#devlog">Dev Log</a></li>
         <li><a href="#follow">Follow</a></li>
       </ul>
@@ -42,7 +42,8 @@
         <h1 id="hero-title" class="hero-title-fallback">Realms of<br/><span>Eternal War</span></h1>
       </div>
       <p class="hero-tagline">Ten realms. Countless paths. One world.</p>
-      <p class="hero-sub">In Development &mdash; Follow the Journey</p>
+      <p class="hero-premise">Every player enters equal — one castle, one chance. The goal is to be the last independent power standing. But here is what no other strategy game does: when you are defeated, you do not leave. You become a vassal. You keep playing. And you wait for your moment.</p>
+      <p class="hero-sub"><span class="hero-badge">In Development</span> &mdash; A multiplayer grand strategy game built in Unreal Engine 5. Follow the making of Aethelgard from first commit to final siege.</p>
       <div class="hero-scroll-hint">
         <span>Scroll to enter Aethelgard</span>
         <div class="scroll-arrow"></div>
@@ -59,6 +60,11 @@
       <div class="section-rule"></div>
     </div>
     <p class="section-intro">Ten continents. Each one a civilisation, a climate, a way of war.<br/>From the frozen peaks of Frostpeak to the corrupted darkness of Shadowvale.<br/><em>Every realm is a different game.</em></p>
+
+    <div class="world-strategy-note">
+      <p>No continent produces everything. Verdantia holds the finest magical timber in Aethelgard. Stoneheart sits above the deepest metal deposits on the map. Frostpeak has ice crystals found nowhere else — and no one fully understands what they are used for yet. This uneven distribution of resources is not a design choice. It is a political system. It drives trade, conflict, and the alliances that form before the first sword is drawn.</p>
+      <p class="world-mystery">The oldest maps of Aethelgard do not show Shadowvale. They show a place called <em>Dawnvale</em> — once described as the most fertile land on the continent. No one recorded what changed it. No one who went looking came back with an answer that made sense.</p>
+    </div>
 
     <div class="map-container">
       <img src="images/map.png" alt="Map of Aethelgard" class="map-image" id="mainMap" />
@@ -177,12 +183,12 @@
             <p class="race-teaser">The most dangerous race is the one that masters everything.</p>
           </div>
           <div class="race-card-back">
-            <h3>Humans</h3>
             <ul class="race-traits">
               <li><span class="trait-name">Magic Engineering</span><span class="trait-desc">Arcane power meets mechanical precision</span></li>
               <li><span class="trait-name">Elemental Versatility</span><span class="trait-desc">Commands all elements including light and dark</span></li>
               <li><span class="trait-name">Diplomatic Acumen</span><span class="trait-desc">Natural negotiators. Natural survivors.</span></li>
             </ul>
+            <p class="race-weakness">⚠ Their adaptability is a strength and a trap — Humans rarely dominate any single domain, meaning a focused enemy on their home terrain will almost always outperform them.</p>
             <p class="race-home">Home: All Continents</p>
           </div>
         </div>
@@ -203,6 +209,7 @@
               <li><span class="trait-name">Natural Mana Control</span><span class="trait-desc">Forest terrain becomes a weapon</span></li>
               <li><span class="trait-name">Longevity Wisdom</span><span class="trait-desc">Ancient knowledge others have forgotten</span></li>
             </ul>
+            <p class="race-weakness">⚠ Their power is inseparable from the forest — take them to open plains or volcanic rock and their magic thins to almost nothing.</p>
             <p class="race-home">Home: Verdantia</p>
           </div>
         </div>
@@ -223,6 +230,7 @@
               <li><span class="trait-name">Earth Manipulation</span><span class="trait-desc">Reshape battlefield terrain in real time</span></li>
               <li><span class="trait-name">Resilience</span><span class="trait-desc">Resistant to poison, disease, and magical debuffs</span></li>
             </ul>
+            <p class="race-weakness">⚠ Their underground culture makes naval expansion nearly impossible, and diplomatic integration with surface races is slower — they are almost never first to form alliances.</p>
             <p class="race-home">Home: Stoneheart</p>
           </div>
         </div>
@@ -243,6 +251,7 @@
               <li><span class="trait-name">Overwhelming Strength</span><span class="trait-desc">Break fortifications with bare hands</span></li>
               <li><span class="trait-name">Tribal Ferocity</span><span class="trait-desc">Combat bonuses fighting alongside kin</span></li>
             </ul>
+            <p class="race-weakness">⚠ Ogre Tribes have no diplomatic vocabulary — they cannot negotiate treaties or form sustained alliances, making every campaign a fight they must win alone.</p>
             <p class="race-home">Home: Wildlands</p>
           </div>
         </div>
@@ -263,6 +272,7 @@
               <li><span class="trait-name">Water Mastery</span><span class="trait-desc">Tidal waves, currents, flooding as weapons</span></li>
               <li><span class="trait-name">Siren's Call</span><span class="trait-desc">Enchanting voices that lure enemies into traps</span></li>
             </ul>
+            <p class="race-weakness">⚠ Take the war inland and Mermen become ordinary — every advantage they possess dissolves the moment there is no water within reach.</p>
             <p class="race-home">Home: Azuremere</p>
           </div>
         </div>
@@ -283,6 +293,7 @@
               <li><span class="trait-name">Aerial Supremacy</span><span class="trait-desc">Ignore terrain. Strike from any angle.</span></li>
               <li><span class="trait-name">Captivating Song</span><span class="trait-desc">Sonic screams that stun and confuse entire formations</span></li>
             </ul>
+            <p class="race-weakness">⚠ Harpy structures are built for sky, not siege — their fortifications are the most vulnerable in a prolonged ground assault, and they cannot hold territory they cannot fly above.</p>
             <p class="race-home">Home: Windspire</p>
           </div>
         </div>
@@ -375,12 +386,17 @@
         </div>
       </div>
 
-      <div class="timeline-event right" data-reveal>
+      <div class="timeline-event left" data-reveal>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="timeline-era">Year 0 — The Sundering</div>
           <h3>The First War</h3>
           <p>Avaloria burned. Shadowvale grew darker. The six races chose sides for the first time — and discovered that once chosen, sides are not easily abandoned. The war that would define Aethelgard forever had begun.</p>
+          <div class="timeline-fragment">
+            <p class="fragment-label">— From a manuscript dismissed as forgery, recovered from the Imperial Archive ruins, author unknown —</p>
+            <p class="fragment-text">"The Sundering was not an accident. The first war was not started by kings or generals or pride. It was started by something that had no stake in it and therefore found it entertaining. I have seen the correspondence. I cannot tell you where it was sent from, because there is no name for that place in any language I know."</p>
+            <p class="fragment-label">— End of recovered text. Subsequent pages: missing.</p>
+          </div>
         </div>
       </div>
 
@@ -389,7 +405,7 @@
         <div class="timeline-content">
           <div class="timeline-era">Year 982 A.C.</div>
           <h3>The Age of the Ashen Crown</h3>
-          <p>Emberhold legions mass for a southern push. Shadowvale strengthens coastal defences. Wildlands grow unstable — raider activity increasing across three continents. The floating isles of Windspire remain inaccessible without airships. The war council meets at Riverwatch. A map is drawn. Sides are chosen again.</p>
+          <p>Nearly a thousand years of intermittent conflict have reshaped the map. Avaloria has changed hands fourteen times. Shadowvale has never been taken. The smaller kingdoms have risen and collapsed so many times that historians stopped counting in Year 600. Now: Emberhold legions mass for a southern push. Shadowvale strengthens coastal defences. Wildlands grow unstable — raider activity increasing across three continents. The floating isles of Windspire remain inaccessible without airships. The war council meets at Riverwatch. A map is drawn. Sides are chosen again.</p>
           <div class="timeline-classified">
             <img src="images/medival_style.png" alt="War Council Map" class="timeline-map-preview" />
             <p class="timeline-map-caption">War Council Map — recovered from the siege of Riverwatch, Year 982 A.C.</p>
@@ -403,7 +419,7 @@
           <div class="timeline-era">Now</div>
           <h3>The Eternal War Continues</h3>
           <p>Ten realms. Six civilisations. One conflict that has never ended and never will. The question is not whether there will be war. The question is which side you will stand on when it reaches your gates.</p>
-          <p class="timeline-cta">More lore revealed as the game is built. <a href="#follow">Follow the journey.</a></p>
+          <p class="timeline-cta">The official history is incomplete. Following this journey means getting closer to what actually happened. <a href="#follow">Follow the journey.</a></p>
         </div>
       </div>
 
@@ -414,10 +430,17 @@
   <section id="gameplay">
     <div class="section-header">
       <div class="section-rule"></div>
-      <h2 class="section-title">Building the Realms</h2>
+      <h2 class="section-title">How the Game Is Played</h2>
       <div class="section-rule"></div>
     </div>
     <p class="section-intro">A grand strategy game built in Unreal Engine 5.<br/>Every system designed from the ground up.</p>
+
+    <div class="player-journey">
+      <h3 class="journey-title">The Player Journey</h3>
+      <p>Every player enters equal. One castle. One territory. No head start, no inherited advantage. In the early game you build, trade, and form the alliances that will define who you are. In the mid game the wars begin — and the first kingdoms fall.</p>
+      <p>Here is what makes RoEW different from every other strategy game: when a ruler is defeated, they do not leave. They choose — submit and become a vassal, keeping their lands and their agency but swearing loyalty to the power that beat them, or burn everything and deny the enemy their prize. Vassals keep playing. They build. They wait. They look for the moment to revolt.</p>
+      <p>The game does not end when half the players are eliminated. It ends when the last independent power is standing — or when a victory condition is achieved. The world contracts. The map of who answers to whom shifts. The final act of every game is always different, because the alliances that carry a player to the end were built by real people making real decisions under real pressure.</p>
+    </div>
 
     <div class="progress-bar-wrap">
       <div class="progress-label">Overall Development Progress</div>
@@ -576,6 +599,10 @@
           <p>Build global alliances. Create international institutions. Achieve victory through leadership rather than destruction.</p>
         </div>
       </div>
+      <div class="victory-hidden">
+        <p>And one path that is not listed here.</p>
+        <p class="victory-hidden-sub">Most players will never find it.</p>
+      </div>
     </div>
   </section>
 
@@ -588,6 +615,10 @@
     </div>
     <p class="section-intro">Building in public. Every week, a dispatch from inside the studio.</p>
 
+    <div class="devlog-philosophy">
+      <p>Followers are not just watching a game being made — they are part of the process. Feedback shapes design decisions. The dev log is an honest record of the real journey, including the parts that do not go as planned. That is the point of building in public.</p>
+    </div>
+
     <div class="devlog-entries">
 
       <div class="devlog-entry" data-reveal>
@@ -597,8 +628,8 @@
         </div>
         <div class="devlog-body">
           <h3>Foundation &amp; First Presence</h3>
-          <p>The world of Aethelgard exists on paper. Ten continents designed. Six races defined. 47 pages of game design documented and legally protected. The Instagram account is live. The website is live. The dev environment is being assembled.</p>
-          <p>This week: Unreal Engine 5 installation. Visual Studio 2022 setup. Git repository initialised. The first commit is always the hardest. After that, it's just discipline.</p>
+          <p>The world of Aethelgard exists on paper. Ten continents designed. Six races defined. 47 pages of game design documented and legally protected. The Instagram account is live. The website is live. Phase 1, Parts A and B are complete.</p>
+          <p>Unreal Engine 5 installation is underway. Visual Studio 2022 setup in progress. Git repository initialised — this very website is in it. The first commit is always the hardest. After that, it's just discipline.</p>
           <div class="devlog-tags">
             <span class="devlog-tag">Phase 1</span>
             <span class="devlog-tag">Setup</span>
@@ -690,7 +721,7 @@
       </form>
       <p class="notify-legal">No spam. One email when the demo goes live. That's it.</p>
       <p class="notify-success" id="notifySuccess" style="display:none;color:var(--gold);font-style:italic;margin-top:0.8rem">
-        ✓ You're on the list. We'll be in touch when the gates open.
+        ✓ You're in. When the demo gates open, you will be among the first rulers to enter Aethelgard. Dispatches from the dev log will reach you before they reach anyone else.
       </p>
     </div>
   </section>
@@ -703,6 +734,7 @@
         <span class="footer-logo-text">Realms of Eternal War</span>
       </div>
       <p class="footer-tagline">Ten realms. Countless paths. One world.</p>
+      <p class="footer-desc">A multiplayer grand strategy game built in Unreal Engine 5 — one castle, one world, last power standing.</p>
       <p class="footer-status">In Development — Unreal Engine 5</p>
       <div class="footer-links">
         <a href="https://www.instagram.com/realms_of_eternal_war/" target="_blank" rel="noopener noreferrer">Instagram</a>
