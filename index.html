@@ -298,13 +298,14 @@
         <div class="section-rule"></div>
       </div>
       <p class="section-intro">Two paths. One civilisation. The most dangerous faction in Aethelgard.</p>
-      <div class="character-pair">
+      <p class="character-trio-intro">Three paths. One race. <em>Or all three.</em></p>
+      <div class="character-trio">
         <div class="character-slot">
           <div class="character-img-wrap">
-            <img src="images/engineer.png" alt="Human Engineer Diplomat" onerror="this.parentElement.classList.add('no-img')" />
+            <img src="images/engineer.png" alt="Human Master Artificer" onerror="this.parentElement.classList.add('no-img')" />
             <div class="character-img-placeholder">
               <span>Master Artificer</span>
-              <small>Coming Soon</small>
+              <small>Art Coming Soon</small>
             </div>
           </div>
           <div class="character-info">
@@ -314,7 +315,7 @@
         </div>
         <div class="character-divider">
           <div class="divider-line"></div>
-          <span>VS</span>
+          <span>·</span>
           <div class="divider-line"></div>
         </div>
         <div class="character-slot">
@@ -322,12 +323,30 @@
             <img src="images/knight.png" alt="Human Magic Knight" onerror="this.parentElement.classList.add('no-img')" />
             <div class="character-img-placeholder">
               <span>Magic Knight</span>
-              <small>Coming Soon</small>
+              <small>Art Coming Soon</small>
             </div>
           </div>
           <div class="character-info">
             <h4>The Magic Knight</h4>
             <p>Frost at the base. Fire in the middle. Pure light at the tip. One sword. Every element. Simultaneously. The Magic Knight wields what others cannot control.</p>
+          </div>
+        </div>
+        <div class="character-divider">
+          <div class="divider-line"></div>
+          <span>·</span>
+          <div class="divider-line"></div>
+        </div>
+        <div class="character-slot">
+          <div class="character-img-wrap diplomat-slot">
+            <img src="images/diplomat.png" alt="Human Shadow Diplomat" onerror="this.parentElement.classList.add('no-img')" />
+            <div class="character-img-placeholder">
+              <span>The Diplomat</span>
+              <small>Art Coming Soon</small>
+            </div>
+          </div>
+          <div class="character-info">
+            <h4>The Shadow Diplomat</h4>
+            <p>The most dangerous Human in Aethelgard is not the one who builds weapons. Not the one who wields them. It is the one you never see coming. That is the point.</p>
           </div>
         </div>
       </div>
@@ -618,7 +637,7 @@
     <p class="section-intro">This game is being built in public. Every post is a chapter.<br/>Every follower is a witness to a world being born.</p>
 
     <div class="social-links">
-      <a href="https://instagram.com/realms_of_eternal_war" target="_blank" class="social-link instagram">
+      <a href="https://www.instagram.com/realms_of_eternal_war/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
         <div class="social-icon">📸</div>
         <div class="social-info">
           <span class="social-platform">Instagram</span>
@@ -647,11 +666,32 @@
     <div class="notify-section">
       <h3 class="notify-title">Be First to Know</h3>
       <p class="notify-sub">When the demo launches, you'll be the first inside the gates.</p>
-      <div class="notify-form">
-        <input type="email" placeholder="your@email.com" class="notify-input" id="notifyEmail" />
-        <button class="notify-btn" onclick="handleNotify()">Notify Me</button>
-      </div>
+      <form
+        name="notify"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        class="notify-form-real"
+        onsubmit="handleFormSubmit(event)"
+      >
+        <input type="hidden" name="form-name" value="notify" />
+        <p style="display:none"><input name="bot-field" /></p>
+        <div class="notify-form">
+          <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            class="notify-input"
+            id="notifyEmail"
+            required
+          />
+          <button type="submit" class="notify-btn" id="notifyBtn">Notify Me</button>
+        </div>
+      </form>
       <p class="notify-legal">No spam. One email when the demo goes live. That's it.</p>
+      <p class="notify-success" id="notifySuccess" style="display:none;color:var(--gold);font-style:italic;margin-top:0.8rem">
+        ✓ You're on the list. We'll be in touch when the gates open.
+      </p>
     </div>
   </section>
 
@@ -665,7 +705,7 @@
       <p class="footer-tagline">Ten realms. Countless paths. One world.</p>
       <p class="footer-status">In Development — Unreal Engine 5</p>
       <div class="footer-links">
-        <a href="https://instagram.com/realms_of_eternal_war" target="_blank">Instagram</a>
+        <a href="https://www.instagram.com/realms_of_eternal_war/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <span class="footer-sep">·</span>
         <a href="#world">The World</a>
         <span class="footer-sep">·</span>
