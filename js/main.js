@@ -188,9 +188,11 @@ document.querySelectorAll('.continent-card').forEach(card => {
 });
 
 // --- NOTIFY FORM ---
-function handleNotify() {
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
   const email = document.getElementById('notifyEmail').value.trim();
-  const btn = document.querySelector('.notify-btn');
+  const btn = document.getElementById('notifyBtn');
   if (!email || !email.includes('@')) {
     btn.textContent = 'Enter valid email';
     btn.style.background = 'var(--crimson)';
@@ -200,17 +202,28 @@ function handleNotify() {
     }, 2000);
     return;
   }
-  // Store in localStorage for now
-  const list = JSON.parse(localStorage.getItem('roew_notify') || '[]');
-  if (!list.includes(email)) {
-    list.push(email);
-    localStorage.setItem('roew_notify', JSON.stringify(list));
-  }
-  btn.textContent = 'You\'re on the list ✓';
-  btn.style.background = '#2a6b2a';
+  btn.textContent = 'Sending...';
   btn.disabled = true;
-  document.getElementById('notifyEmail').value = '';
-  document.getElementById('notifyEmail').placeholder = 'Registered — we\'ll be in touch';
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  })
+  .then(() => {
+    document.getElementById('notifyEmail').value = '';
+    btn.textContent = 'You\'re on the list ✓';
+    btn.style.background = '#2a6b2a';
+    document.getElementById('notifySuccess').style.display = 'block';
+  })
+  .catch(() => {
+    btn.textContent = 'Try again';
+    btn.style.background = 'var(--crimson)';
+    btn.disabled = false;
+    setTimeout(() => {
+      btn.textContent = 'Notify Me';
+      btn.style.background = '';
+    }, 3000);
+  });
 }
 
 // --- PROGRESS BAR ANIMATION ---
