@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realms of Eternal War — Aethelgard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- PARTICLE CANVAS -->
+  <canvas id="particles"></canvas>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="nav-logo-text">RoEW</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#world">The World</a></li>
+        <li><a href="#races">The Races</a></li>
+        <li><a href="#story">The Story</a></li>
+        <li><a href="#gameplay">Gameplay</a></li>
+        <li><a href="#devlog">Dev Log</a></li>
+        <li><a href="#follow">Follow</a></li>
+      </ul>
+      <div class="nav-status">In Development</div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-logo-wrap">
+        <img src="images/logo.png" alt="Realms of Eternal War" class="hero-logo" onerror="this.style.display='none'; document.getElementById('hero-title').style.display='block'" />
+        <h1 id="hero-title" class="hero-title-fallback">Realms of<br/><span>Eternal War</span></h1>
+      </div>
+      <p class="hero-tagline">Ten realms. Countless paths. One world.</p>
+      <p class="hero-sub">In Development &mdash; Follow the Journey</p>
+      <div class="hero-scroll-hint">
+        <span>Scroll to enter Aethelgard</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+    <div class="hero-vignette"></div>
+  </section>
+
+  <!-- WORLD SECTION -->
+  <section id="world">
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">The World of Aethelgard</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">Ten continents. Each one a civilisation, a climate, a way of war.<br/>From the frozen peaks of Frostpeak to the corrupted darkness of Shadowvale.<br/><em>Every realm is a different game.</em></p>
+
+    <div class="map-container">
+      <img src="images/map.png" alt="Map of Aethelgard" class="map-image" id="mainMap" />
+      <div class="map-overlay" id="mapOverlay"></div>
+      <div class="continent-tooltip" id="continentTooltip">
+        <div class="tooltip-header">
+          <span class="tooltip-name" id="tooltipName"></span>
+          <span class="tooltip-subtitle" id="tooltipSubtitle"></span>
+        </div>
+        <p class="tooltip-desc" id="tooltipDesc"></p>
+        <div class="tooltip-tags" id="tooltipTags"></div>
+      </div>
+    </div>
+
+    <div class="continent-grid">
+      <div class="continent-card" data-continent="avaloria">
+        <div class="continent-card-img" style="background-image:url('images/avaloria.png')"></div>
+        <div class="continent-card-body">
+          <h3>Avaloria</h3>
+          <p class="continent-card-sub">The Central Lands</p>
+          <p>The heartland of civilisation and unity. Temperate, fertile, and endlessly contested.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="frostpeak">
+        <div class="continent-card-img" style="background-image:url('images/frostpeak.png')"></div>
+        <div class="continent-card-body">
+          <h3>Frostpeak</h3>
+          <p class="continent-card-sub">The Northern Dominion</p>
+          <p>The largest continent. Ice, endurance, and oaths sworn in the cold that never breaks.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="windspire">
+        <div class="continent-card-img" style="background-image:url('images/windspire.png')"></div>
+        <div class="continent-card-body">
+          <h3>Windspire</h3>
+          <p class="continent-card-sub">The Floating Realm</p>
+          <p>Castles suspended between sky and stone. A realm where gravity is negotiable.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="emberhold">
+        <div class="continent-card-img" style="background-image:url('images/emberhold.png')"></div>
+        <div class="continent-card-body">
+          <h3>Emberhold</h3>
+          <p class="continent-card-sub">The Volcanic Realm</p>
+          <p>Forged in fire. Sustained by the earth's core. The volcano never sleeps.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="verdantia">
+        <div class="continent-card-img" style="background-image:url('images/verdentia.png')"></div>
+        <div class="continent-card-body">
+          <h3>Verdantia</h3>
+          <p class="continent-card-sub">The Ancient Forest</p>
+          <p>Ancient and wild. Keeper of life's balance. The forest remembers everything.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="stoneheart">
+        <div class="continent-card-img" style="background-image:url('images/stone_heart.png')"></div>
+        <div class="continent-card-body">
+          <h3>Stoneheart</h3>
+          <p class="continent-card-sub">The Mountain Realm</p>
+          <p>Unyielding bastion of defence and honour. The mountains hold their secrets deep.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="sunreach">
+        <div class="continent-card-img" style="background-image:url('images/sunreach.png')"></div>
+        <div class="continent-card-body">
+          <h3>Sunreach</h3>
+          <p class="continent-card-sub">The Desert Empire</p>
+          <p>Land of sun, wealth, and tireless sands. Ancient pyramids hold older power.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="azuremere">
+        <div class="continent-card-img" style="background-image:url('images/azuremere.png')"></div>
+        <div class="continent-card-body">
+          <h3>Azuremere</h3>
+          <p class="continent-card-sub">The Sapphire Archipelago</p>
+          <p>Oceans of trade, freedom, and hidden treasures. Control the seas, control the war.</p>
+        </div>
+      </div>
+      <div class="continent-card" data-continent="wildlands">
+        <div class="continent-card-img" style="background-image:url('images/wildlands.png')"></div>
+        <div class="continent-card-body">
+          <h3>Wildlands</h3>
+          <p class="continent-card-sub">The Untamed Expanse</p>
+          <p>Untamed wilderness. Magical anomalies reshape the land overnight. Nothing is certain.</p>
+        </div>
+      </div>
+      <div class="continent-card shadowvale-card" data-continent="shadowvale">
+        <div class="continent-card-img" style="background-image:url('images/shadowvale.png')"></div>
+        <div class="continent-card-body">
+          <h3>Shadowvale</h3>
+          <p class="continent-card-sub">The Veiled Dominion</p>
+          <p>Shrouded in dusk, feared and forsaken. Power at a cost. The darkness remembers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RACES SECTION -->
+  <section id="races">
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">The Six Races of Aethelgard</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">Six civilisations. Six ways to wage war. Six paths to victory.</p>
+
+    <div class="races-grid">
+
+      <div class="race-card" data-race="humans">
+        <div class="race-card-inner">
+          <div class="race-card-front">
+            <div class="race-emblem">⚔️</div>
+            <h3 class="race-name">Humans</h3>
+            <p class="race-subtitle">The Adaptable Innovators</p>
+            <p class="race-teaser">The most dangerous race is the one that masters everything.</p>
+          </div>
+          <div class="race-card-back">
+            <h3>Humans</h3>
+            <ul class="race-traits">
+              <li><span class="trait-name">Magic Engineering</span><span class="trait-desc">Arcane power meets mechanical precision</span></li>
+              <li><span class="trait-name">Elemental Versatility</span><span class="trait-desc">Commands all elements including light and dark</span></li>
+              <li><span class="trait-name">Diplomatic Acumen</span><span class="trait-desc">Natural negotiators. Natural survivors.</span></li>
+            </ul>
+            <p class="race-home">Home: All Continents</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="race-card" data-race="elves">
+        <div class="race-card-inner">
+          <div class="race-card-front">
+            <div class="race-emblem">🌿</div>
+            <h3 class="race-name">Elves</h3>
+            <p class="race-subtitle">Masters of Ancient Wisdom</p>
+            <p class="race-teaser">Centuries of knowledge compressed into a single devastating strategy.</p>
+          </div>
+          <div class="race-card-back">
+            <h3>Elves</h3>
+            <ul class="race-traits">
+              <li><span class="trait-name">Enchantment Mastery</span><span class="trait-desc">Magical items with permanent, lasting effects</span></li>
+              <li><span class="trait-name">Natural Mana Control</span><span class="trait-desc">Forest terrain becomes a weapon</span></li>
+              <li><span class="trait-name">Longevity Wisdom</span><span class="trait-desc">Ancient knowledge others have forgotten</span></li>
+            </ul>
+            <p class="race-home">Home: Verdantia</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="race-card" data-race="dwarves">
+        <div class="race-card-inner">
+          <div class="race-card-front">
+            <div class="race-emblem">⛏️</div>
+            <h3 class="race-name">Dwarves</h3>
+            <p class="race-subtitle">Craftsmen of the Deep Earth</p>
+            <p class="race-teaser">The finest weapons in Aethelgard come from one place.</p>
+          </div>
+          <div class="race-card-back">
+            <h3>Dwarves</h3>
+            <ul class="race-traits">
+              <li><span class="trait-name">Master Smithing</span><span class="trait-desc">Equipment no other race can replicate</span></li>
+              <li><span class="trait-name">Earth Manipulation</span><span class="trait-desc">Reshape battlefield terrain in real time</span></li>
+              <li><span class="trait-name">Resilience</span><span class="trait-desc">Resistant to poison, disease, and magical debuffs</span></li>
+            </ul>
+            <p class="race-home">Home: Stoneheart</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="race-card" data-race="ogres">
+        <div class="race-card-inner">
+          <div class="race-card-front">
+            <div class="race-emblem">💀</div>
+            <h3 class="race-name">Ogre Tribes</h3>
+            <p class="race-subtitle">Warriors of the Borderlands</p>
+            <p class="race-teaser">Raw power that breaks formations before combat begins.</p>
+          </div>
+          <div class="race-card-back">
+            <h3>Ogre Tribes</h3>
+            <ul class="race-traits">
+              <li><span class="trait-name">Brutal Weaponry</span><span class="trait-desc">Weapons that cause fear before they land</span></li>
+              <li><span class="trait-name">Overwhelming Strength</span><span class="trait-desc">Break fortifications with bare hands</span></li>
+              <li><span class="trait-name">Tribal Ferocity</span><span class="trait-desc">Combat bonuses fighting alongside kin</span></li>
+            </ul>
+            <p class="race-home">Home: Wildlands</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="race-card" data-race="mermen">
+        <div class="race-card-inner">
+          <div class="race-card-front">
+            <div class="race-emblem">🔱</div>
+            <h3 class="race-name">Mermen</h3>
+            <p class="race-subtitle">Rulers of the Seas</p>
+            <p class="race-teaser">Control the seas. Control the trade routes. Control the war.</p>
+          </div>
+          <div class="race-card-back">
+            <h3>Mermen</h3>
+            <ul class="race-traits">
+              <li><span class="trait-name">Aquatic Architecture</span><span class="trait-desc">Underwater structures immune to siege</span></li>
+              <li><span class="trait-name">Water Mastery</span><span class="trait-desc">Tidal waves, currents, flooding as weapons</span></li>
+              <li><span class="trait-name">Siren's Call</span><span class="trait-desc">Enchanting voices that lure enemies into traps</span></li>
+            </ul>
+            <p class="race-home">Home: Azuremere</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="race-card" data-race="harpies">
+        <div class="race-card-inner">
+          <div class="race-card-front">
+            <div class="race-emblem">🦅</div>
+            <h3 class="race-name">Harpies</h3>
+            <p class="race-subtitle">Masters of the Skies</p>
+            <p class="race-teaser">They do not march to war. They descend upon it.</p>
+          </div>
+          <div class="race-card-back">
+            <h3>Harpies</h3>
+            <ul class="race-traits">
+              <li><span class="trait-name">Windcraft</span><span class="trait-desc">Lightweight structures that harness wind power</span></li>
+              <li><span class="trait-name">Aerial Supremacy</span><span class="trait-desc">Ignore terrain. Strike from any angle.</span></li>
+              <li><span class="trait-name">Captivating Song</span><span class="trait-desc">Sonic screams that stun and confuse entire formations</span></li>
+            </ul>
+            <p class="race-home">Home: Windspire</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Human Characters Showcase -->
+    <div class="character-showcase">
+      <div class="section-header" style="margin-top:5rem">
+        <div class="section-rule"></div>
+        <h3 class="section-title" style="font-size:1.6rem">The Human Race — Revealed</h3>
+        <div class="section-rule"></div>
+      </div>
+      <p class="section-intro">Two paths. One civilisation. The most dangerous faction in Aethelgard.</p>
+      <div class="character-pair">
+        <div class="character-slot">
+          <div class="character-img-wrap">
+            <img src="images/engineer.png" alt="Human Engineer Diplomat" onerror="this.parentElement.classList.add('no-img')" />
+            <div class="character-img-placeholder">
+              <span>Master Artificer</span>
+              <small>Coming Soon</small>
+            </div>
+          </div>
+          <div class="character-info">
+            <h4>The Master Artificer</h4>
+            <p>Where diplomacy ends, engineering begins. The Artificer carries blueprints for weapons that don't exist yet — because they are still building them.</p>
+          </div>
+        </div>
+        <div class="character-divider">
+          <div class="divider-line"></div>
+          <span>VS</span>
+          <div class="divider-line"></div>
+        </div>
+        <div class="character-slot">
+          <div class="character-img-wrap">
+            <img src="images/knight.png" alt="Human Magic Knight" onerror="this.parentElement.classList.add('no-img')" />
+            <div class="character-img-placeholder">
+              <span>Magic Knight</span>
+              <small>Coming Soon</small>
+            </div>
+          </div>
+          <div class="character-info">
+            <h4>The Magic Knight</h4>
+            <p>Frost at the base. Fire in the middle. Pure light at the tip. One sword. Every element. Simultaneously. The Magic Knight wields what others cannot control.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY SECTION -->
+  <section id="story">
+    <div class="story-bg"></div>
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">The Story of Aethelgard</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">Before the first castle rose, there was only Aethelgard — vast, ancient, and divided.<br/>The war that followed was never meant to end. <em>It never did.</em></p>
+
+    <div class="timeline">
+      <div class="timeline-line"></div>
+
+      <div class="timeline-event left" data-reveal>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-era">The Age of Formation</div>
+          <h3>The World Takes Shape</h3>
+          <p>The ten continents emerged from forces older than memory. Six races awakened. The first castles were built into the terrain itself — stone meeting slope, wall meeting world. No one knew it was already a war.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event right" data-reveal>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-era">Year 0 — The Sundering</div>
+          <h3>The First War</h3>
+          <p>Avaloria burned. Shadowvale grew darker. The six races chose sides for the first time — and discovered that once chosen, sides are not easily abandoned. The war that would define Aethelgard forever had begun.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event left" data-reveal>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-era">Year 982 A.C.</div>
+          <h3>The Age of the Ashen Crown</h3>
+          <p>Emberhold legions mass for a southern push. Shadowvale strengthens coastal defences. Wildlands grow unstable — raider activity increasing across three continents. The floating isles of Windspire remain inaccessible without airships. The war council meets at Riverwatch. A map is drawn. Sides are chosen again.</p>
+          <div class="timeline-classified">
+            <img src="images/medival_style.png" alt="War Council Map" class="timeline-map-preview" />
+            <p class="timeline-map-caption">War Council Map — recovered from the siege of Riverwatch, Year 982 A.C.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-event right" data-reveal>
+        <div class="timeline-dot timeline-dot-now"></div>
+        <div class="timeline-content timeline-content-now">
+          <div class="timeline-era">Now</div>
+          <h3>The Eternal War Continues</h3>
+          <p>Ten realms. Six civilisations. One conflict that has never ended and never will. The question is not whether there will be war. The question is which side you will stand on when it reaches your gates.</p>
+          <p class="timeline-cta">More lore revealed as the game is built. <a href="#follow">Follow the journey.</a></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GAMEPLAY SECTION -->
+  <section id="gameplay">
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">Building the Realms</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">A grand strategy game built in Unreal Engine 5.<br/>Every system designed from the ground up.</p>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-label">Overall Development Progress</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: 4%"></div>
+        <span class="progress-pct">4%</span>
+      </div>
+      <div class="progress-phase">Phase 1 — Foundation &amp; Setup</div>
+    </div>
+
+    <div class="systems-grid">
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">🏰</div>
+            <h4>Kingdom Management</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Kingdom Management</h4>
+            <p>Build your castle, manage your economy, expand your territory across ten continents. Every building placed carries lasting consequence.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">⚔️</div>
+            <h4>Epic Warfare</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Epic Warfare</h4>
+            <p>Command armies across diverse terrain. Every battle shaped by the land beneath your feet. Terrain is not background — it is strategy.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">🏯</div>
+            <h4>Siege &amp; Fortifications</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Siege &amp; Fortifications</h4>
+            <p>Castle walls that physically conform to terrain elevation in real time. The castle bends to the land. Not the other way around.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">⚗️</div>
+            <h4>Magic Engineering</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Magic Engineering</h4>
+            <p>Combine mechanical principles with magical energy. Build technologies beyond conventional limits. Arcane engines. Elemental weaponry. Enchanted infrastructure.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">🤝</div>
+            <h4>Diplomacy &amp; Alliances</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Diplomacy &amp; Alliances</h4>
+            <p>Six races. Competing interests. Every alliance a calculated risk. Every betrayal a strategic opportunity. The greatest weapon is information.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">⚓</div>
+            <h4>Naval Dominance</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Naval Dominance</h4>
+            <p>Control the seas. Control the trade routes. Control the war. Azuremere's archipelago makes naval power the deciding factor in continental conflict.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">🕵️</div>
+            <h4>Espionage &amp; Intelligence</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Espionage &amp; Intelligence</h4>
+            <p>Information is the deadliest weapon in Aethelgard. Spy networks, counter-intelligence, disinformation campaigns. Use it accordingly.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <div class="system-card-inner">
+          <div class="system-front">
+            <div class="system-icon">🔬</div>
+            <h4>Research &amp; Technomancy</h4>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+          <div class="system-back">
+            <h4>Research &amp; Technomancy</h4>
+            <p>Advance through magical and technological research trees that reshape how you wage war. The most dangerous kingdoms are the ones that know something others don't.</p>
+            <div class="system-status status-dev">In Development</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="victory-section">
+      <h3 class="victory-title">Four Paths to Victory</h3>
+      <div class="victory-grid">
+        <div class="victory-card">
+          <div class="victory-icon">⚔️</div>
+          <h4>Military Conquest</h4>
+          <p>Dominate through force. Capture strategic strongholds. Lead the greatest military alliance Aethelgard has ever seen.</p>
+        </div>
+        <div class="victory-card">
+          <div class="victory-icon">💰</div>
+          <h4>Economic Supremacy</h4>
+          <p>Control trade routes, resource monopolies, and financial systems until your wealth makes you untouchable.</p>
+        </div>
+        <div class="victory-card">
+          <div class="victory-icon">✨</div>
+          <h4>Magical Ascendancy</h4>
+          <p>Master arcane forces. Complete grand magical projects. Reshape the very environment of Aethelgard to your will.</p>
+        </div>
+        <div class="victory-card">
+          <div class="victory-icon">🏛️</div>
+          <h4>Diplomatic Excellence</h4>
+          <p>Build global alliances. Create international institutions. Achieve victory through leadership rather than destruction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEV LOG SECTION -->
+  <section id="devlog">
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">Dev Log</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">Building in public. Every week, a dispatch from inside the studio.</p>
+
+    <div class="devlog-entries">
+
+      <div class="devlog-entry" data-reveal>
+        <div class="devlog-meta">
+          <span class="devlog-week">Week 1</span>
+          <span class="devlog-date">May 2026</span>
+        </div>
+        <div class="devlog-body">
+          <h3>Foundation &amp; First Presence</h3>
+          <p>The world of Aethelgard exists on paper. Ten continents designed. Six races defined. 47 pages of game design documented and legally protected. The Instagram account is live. The website is live. The dev environment is being assembled.</p>
+          <p>This week: Unreal Engine 5 installation. Visual Studio 2022 setup. Git repository initialised. The first commit is always the hardest. After that, it's just discipline.</p>
+          <div class="devlog-tags">
+            <span class="devlog-tag">Phase 1</span>
+            <span class="devlog-tag">Setup</span>
+            <span class="devlog-tag">Unreal Engine 5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="devlog-entry devlog-placeholder" data-reveal>
+        <div class="devlog-meta">
+          <span class="devlog-week">Week 3+</span>
+          <span class="devlog-date">Coming Soon</span>
+        </div>
+        <div class="devlog-body">
+          <h3>Next Entry — Unreal Learning Begins</h3>
+          <p class="devlog-locked">The next dispatch will cover the first Unreal Engine terrain builds, the top-down strategy camera, and the GameMode framework. Follow on Instagram for real-time updates.</p>
+          <div class="devlog-tags">
+            <span class="devlog-tag">Phase 2</span>
+            <span class="devlog-tag">Unreal Engine</span>
+            <span class="devlog-tag">C++</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOLLOW SECTION -->
+  <section id="follow">
+    <div class="follow-bg"></div>
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">Follow the Journey</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">This game is being built in public. Every post is a chapter.<br/>Every follower is a witness to a world being born.</p>
+
+    <div class="social-links">
+      <a href="https://instagram.com/realms_of_eternal_war" target="_blank" class="social-link instagram">
+        <div class="social-icon">📸</div>
+        <div class="social-info">
+          <span class="social-platform">Instagram</span>
+          <span class="social-handle">@realms_of_eternal_war</span>
+        </div>
+        <div class="social-arrow">→</div>
+      </a>
+      <div class="social-link coming-soon">
+        <div class="social-icon">🎮</div>
+        <div class="social-info">
+          <span class="social-platform">Steam</span>
+          <span class="social-handle">Wishlist — Coming Phase 5</span>
+        </div>
+        <div class="social-status">Soon</div>
+      </div>
+      <div class="social-link coming-soon">
+        <div class="social-icon">🎯</div>
+        <div class="social-info">
+          <span class="social-platform">Itch.io Demo</span>
+          <span class="social-handle">Playable Demo — Coming Phase 4</span>
+        </div>
+        <div class="social-status">Soon</div>
+      </div>
+    </div>
+
+    <div class="notify-section">
+      <h3 class="notify-title">Be First to Know</h3>
+      <p class="notify-sub">When the demo launches, you'll be the first inside the gates.</p>
+      <div class="notify-form">
+        <input type="email" placeholder="your@email.com" class="notify-input" id="notifyEmail" />
+        <button class="notify-btn" onclick="handleNotify()">Notify Me</button>
+      </div>
+      <p class="notify-legal">No spam. One email when the demo goes live. That's it.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="images/logo.png" alt="RoEW" class="footer-logo-img" onerror="this.style.display='none'" />
+        <span class="footer-logo-text">Realms of Eternal War</span>
+      </div>
+      <p class="footer-tagline">Ten realms. Countless paths. One world.</p>
+      <p class="footer-status">In Development — Unreal Engine 5</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/realms_of_eternal_war" target="_blank">Instagram</a>
+        <span class="footer-sep">·</span>
+        <a href="#world">The World</a>
+        <span class="footer-sep">·</span>
+        <a href="#races">The Races</a>
+        <span class="footer-sep">·</span>
+        <a href="#story">The Story</a>
+      </div>
+      <p class="footer-copy">© 2026 Realms of Eternal War. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
