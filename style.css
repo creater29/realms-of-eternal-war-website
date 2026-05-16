@@ -696,6 +696,27 @@ section {
   padding: 0.4rem 0.6rem;
 }
 
+/* --- TRINITY IMAGE --- */
+.trinity-image-wrap {
+  max-width: 600px;
+  margin: 2rem auto 3rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(201, 168, 76, 0.1), 0 0 30px rgba(139, 0, 0, 0.15);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.trinity-image-wrap:hover {
+  box-shadow: 0 0 80px rgba(201, 168, 76, 0.2), 0 0 40px rgba(139, 0, 0, 0.25);
+  transform: translateY(-4px);
+}
+
+.trinity-image {
+  width: 100%;
+  display: block;
+}
+
 /* --- STORY SECTION --- */
 #story {
   background: var(--bg-2);
