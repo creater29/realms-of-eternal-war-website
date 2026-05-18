@@ -282,3 +282,167 @@ document.addEventListener('mousemove', (e) => {
 console.log('%c⚔ REALMS OF ETERNAL WAR ⚔', 'color:#c9a84c;font-family:serif;font-size:20px;font-weight:bold');
 console.log('%cTen realms. Countless paths. One world.', 'color:#7a7060;font-family:serif;font-size:12px');
 console.log('%cIn Development — Unreal Engine 5', 'color:#8b0000;font-size:11px');
+
+// ============================================
+// LORE BOOK SYSTEM
+// ============================================
+
+let currentChapter = 0;
+const totalChapters = 11;
+let bookOpen = false;
+
+// Open book on cover click
+const bookCover = document.getElementById('bookCover');
+const bookPages = document.getElementById('bookPages');
+const coverHint = document.getElementById('coverHint');
+
+if (bookCover) {
+  bookCover.addEventListener('click', openBook);
+}
+
+function openBook() {
+  if (bookOpen) return;
+  bookOpen = true;
+
+  // Animate cover away
+  bookCover.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  bookCover.style.opacity = '0';
+  bookCover.style.transform = 'translateX(-60px) rotateY(-20deg) scale(0.95)';
+
+  setTimeout(() => {
+    bookCover.style.display = 'none';
+    bookPages.style.display = 'block';
+    bookPages.style.opacity = '0';
+    bookPages.style.transform = 'translateY(20px)';
+    requestAnimationFrame(() => {
+      bookPages.style.transition = 'all 0.5s ease';
+      bookPages.style.opacity = '1';
+      bookPages.style.transform = 'translateY(0)';
+    });
+    updateBookState();
+  }, 550);
+}
+
+function closeBook() {
+  bookOpen = false;
+  bookPages.style.transition = 'all 0.4s ease';
+  bookPages.style.opacity = '0';
+  bookPages.style.transform = 'translateY(20px)';
+  setTimeout(() => {
+    bookPages.style.display = 'none';
+    bookCover.style.display = 'block';
+    bookCover.style.transition = 'all 0.5s ease';
+    bookCover.style.opacity = '1';
+    bookCover.style.transform = 'none';
+    currentChapter = 0;
+  }, 400);
+}
+
+function nextPage() {
+  if (currentChapter < totalChapters - 1) {
+    animatePageTurn('next');
+    currentChapter++;
+    updateBookState();
+  }
+}
+
+function prevPage() {
+  if (currentChapter > 0) {
+    animatePageTurn('prev');
+    currentChapter--;
+    updateBookState();
+  }
+}
+
+function goToChapter(index) {
+  currentChapter = parseInt(index);
+  updateBookState();
+}
+
+function animatePageTurn(direction) {
+  const currentSpread = document.getElementById('chapter-' + currentChapter);
+  if (!currentSpread) return;
+
+  currentSpread.style.transition = 'all 0.3s ease';
+  currentSpread.style.opacity = '0';
+  currentSpread.style.transform = direction === 'next'
+    ? 'translateX(-30px)'
+    : 'translateX(30px)';
+
+  setTimeout(() => {
+    currentSpread.classList.remove('active');
+    currentSpread.style.opacity = '';
+    currentSpread.style.transform = '';
+    currentSpread.style.transition = '';
+
+    const nextSpread = document.getElementById('chapter-' + currentChapter);
+    if (nextSpread) {
+      nextSpread.style.opacity = '0';
+      nextSpread.style.transform = direction === 'next'
+        ? 'translateX(30px)'
+        : 'translateX(-30px)';
+      nextSpread.classList.add('active');
+      requestAnimationFrame(() => {
+        nextSpread.style.transition = 'all 0.35s ease';
+        nextSpread.style.opacity = '1';
+        nextSpread.style.transform = 'translateX(0)';
+      });
+    }
+  }, 300);
+}
+
+function updateBookState() {
+  // Update active spread
+  document.querySelectorAll('.page-spread').forEach(s => s.classList.remove('active'));
+  const active = document.getElementById('chapter-' + currentChapter);
+  if (active) active.classList.add('active');
+
+  // Update indicator
+  const indicator = document.getElementById('pageIndicator');
+  if (indicator) {
+    const chapterNames = [
+      'I — The Age of Empires',
+      'II — The Accord Between Realms',
+      'III — The Great War',
+      'IV — The World After',
+      'V — The Age of Castles',
+      'VI — The Watchers',
+      'VII — The Touched',
+      'VIII — The Researcher',
+      'IX — The Rebellion of Knowledge',
+      'X — The Fifth Path',
+      'XI — The Epilogue That Isn\'t'
+    ];
+    indicator.textContent = 'Chapter ' + chapterNames[currentChapter];
+  }
+
+  // Update buttons
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  if (prevBtn) prevBtn.disabled = currentChapter === 0;
+  if (nextBtn) nextBtn.disabled = currentChapter === totalChapters - 1;
+
+  // Sync dropdown
+  const dropdown = document.getElementById('chapterDropdown');
+  if (dropdown) dropdown.value = currentChapter;
+
+  // Scroll book into view smoothly
+  const bookContainer = document.getElementById('bookContainer');
+  if (bookContainer && bookOpen) {
+    bookContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// Keyboard navigation for book
+document.addEventListener('keydown', (e) => {
+  if (!bookOpen) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    nextPage();
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    prevPage();
+  }
+  if (e.key === 'Escape') closeBook();
+});

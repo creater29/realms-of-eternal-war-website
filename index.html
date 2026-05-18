@@ -25,6 +25,7 @@
         <li><a href="#races">The Races</a></li>
         <li><a href="#story">The Story</a></li>
         <li><a href="#gameplay">Systems</a></li>
+        <li><a href="#lore">The Lore</a></li>
         <li><a href="#devlog">Dev Log</a></li>
         <li><a href="#follow">Follow</a></li>
       </ul>
@@ -170,7 +171,7 @@
       <h2 class="section-title">The Six Races of Aethelgard</h2>
       <div class="section-rule"></div>
     </div>
-    <p class="section-intro">Six civilisations. Six ways to wage war. Six paths to victory.</p>
+    <p class="section-intro">Six civilisations. Six ways to wage war. One way to win.</p>
 
     <div class="races-grid">
 
@@ -579,34 +580,520 @@
     </div>
 
     <div class="victory-section">
-      <h3 class="victory-title">Four Paths to Victory</h3>
-      <div class="victory-grid">
-        <div class="victory-card">
-          <div class="victory-icon">⚔️</div>
-          <h4>Military Conquest</h4>
-          <p>Dominate through force. Capture strategic strongholds. Lead the greatest military alliance Aethelgard has ever seen.</p>
+      <h3 class="victory-title">One Way to Win</h3>
+      <div class="victory-single">
+        <div class="victory-statement">
+          <div class="victory-statement-icon">⚔️</div>
+          <div class="victory-statement-text">
+            <h4>Complete and Utter Dominance</h4>
+            <p>The game ends when the last independent power submits or falls. There is no partial victory. No points system. No second place. Every kingdom either stands free at the end — or answers to the one that does.</p>
+            <p>Military conquest. Economic strangulation. Magical supremacy. Diplomatic encirclement. These are not separate paths. They are tools. The player who wins uses all of them.</p>
+            <p>Defeated kingdoms do not leave the game. They become vassals — still playing, still building, still watching for the moment their conqueror shows weakness. The bigger your empire grows, the more people inside it are waiting for you to fail.</p>
+          </div>
         </div>
-        <div class="victory-card">
-          <div class="victory-icon">💰</div>
-          <h4>Economic Supremacy</h4>
-          <p>Control trade routes, resource monopolies, and financial systems until your wealth makes you untouchable.</p>
-        </div>
-        <div class="victory-card">
-          <div class="victory-icon">✨</div>
-          <h4>Magical Ascendancy</h4>
-          <p>Master arcane forces. Complete grand magical projects. Reshape the very environment of Aethelgard to your will.</p>
-        </div>
-        <div class="victory-card">
-          <div class="victory-icon">🏛️</div>
-          <h4>Diplomatic Excellence</h4>
-          <p>Build global alliances. Create international institutions. Achieve victory through leadership rather than destruction.</p>
+        <div class="victory-methods">
+          <div class="victory-method">
+            <span class="method-icon">⚔️</span>
+            <span class="method-name">Through Force</span>
+            <span class="method-desc">Armies, sieges, campaigns. The oldest argument.</span>
+          </div>
+          <div class="victory-method">
+            <span class="method-icon">💰</span>
+            <span class="method-name">Through Commerce</span>
+            <span class="method-desc">Control what others need. Make war economically impossible.</span>
+          </div>
+          <div class="victory-method">
+            <span class="method-icon">✨</span>
+            <span class="method-name">Through Magic</span>
+            <span class="method-desc">Reshape the battlefield itself. Make the land fight for you.</span>
+          </div>
+          <div class="victory-method">
+            <span class="method-icon">🤝</span>
+            <span class="method-name">Through Alliance</span>
+            <span class="method-desc">Build coalitions until you are the last free power standing.</span>
+          </div>
         </div>
       </div>
       <div class="victory-hidden">
-        <p>And one path that is not listed here.</p>
-        <p class="victory-hidden-sub">Most players will never find it.</p>
+        <p>And one condition that is not listed anywhere in the game.</p>
+        <p class="victory-hidden-sub">Not in the interface. Not in the tutorial. Most players will never find it. Those who do will wish they hadn't asked.</p>
       </div>
     </div>
+  </section>
+
+  </section>
+
+  <!-- LORE BOOK SECTION -->
+  <section id="lore">
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">The Chronicles of Aethelgard</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="section-intro">The official history of Aethelgard. Written by those who survived it.<br/><em>What they did not know could fill another volume.</em></p>
+
+    <div class="book-container" id="bookContainer">
+      <div class="book" id="book">
+
+        <!-- BOOK COVER -->
+        <div class="book-cover" id="bookCover">
+          <div class="cover-inner">
+            <div class="cover-map">
+              <svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg" class="cover-svg">
+                <!-- Frostpeak - North, largest -->
+                <path d="M120,20 L380,20 L400,30 L420,25 L430,45 L410,55 L390,50 L370,60 L340,55 L310,65 L280,58 L250,68 L220,60 L190,65 L160,58 L140,65 L120,58 L100,65 L90,50 L95,35 Z" class="continent-line" />
+                <text x="250" y="42" class="continent-label-sm">FROSTPEAK</text>
+                <text x="250" y="52" class="continent-sublabel">The Northern Dominion</text>
+
+                <!-- Shadowvale - top left, isolated -->
+                <path d="M25,55 L70,50 L80,65 L85,80 L75,95 L60,100 L40,95 L25,85 L20,70 Z" class="continent-line shadowvale-line" />
+                <text x="52" y="75" class="continent-label-xs">SHADOWVALE</text>
+
+                <!-- Emberhold - top right -->
+                <path d="M430,35 L465,40 L475,55 L470,75 L455,85 L440,80 L430,65 L425,50 Z" class="continent-line ember-line" />
+                <text x="450" y="62" class="continent-label-xs">EMBERHOLD</text>
+
+                <!-- Avaloria - centre -->
+                <path d="M170,85 L310,80 L330,95 L335,115 L325,135 L300,145 L270,150 L240,148 L210,145 L185,135 L165,120 L160,100 Z" class="continent-line avaloria-line" />
+                <text x="248" y="118" class="continent-label">AVALORIA</text>
+                <text x="248" y="128" class="continent-sublabel">The Central Lands</text>
+
+                <!-- Stoneheart - left -->
+                <path d="M60,100 L120,95 L140,110 L145,130 L135,150 L115,160 L90,155 L70,145 L58,130 L55,115 Z" class="continent-line" />
+                <text x="100" y="130" class="continent-label-xs">STONEHEART</text>
+
+                <!-- Verdantia - right -->
+                <path d="M340,80 L420,78 L440,92 L445,115 L435,138 L415,148 L390,152 L365,148 L345,135 L335,115 Z" class="continent-line verdantia-line" />
+                <text x="390" y="118" class="continent-label-xs">VERDANTIA</text>
+
+                <!-- Windspire - far right -->
+                <path d="M452,100 L478,98 L488,115 L485,135 L472,142 L458,138 L450,122 Z" class="continent-line" />
+                <text x="469" y="122" class="continent-label-xs" style="font-size:5px">WINDSPIRE</text>
+                <!-- floating island hint -->
+                <ellipse cx="472" cy="105" rx="8" ry="4" class="continent-line" style="stroke-dasharray:2,2" />
+
+                <!-- Azuremere - south west archipelago -->
+                <ellipse cx="95" cy="210" rx="18" ry="10" class="continent-line" />
+                <ellipse cx="75" cy="225" rx="12" ry="7" class="continent-line" />
+                <ellipse cx="110" cy="228" rx="10" ry="6" class="continent-line" />
+                <ellipse cx="85" cy="240" rx="8" ry="5" class="continent-line" />
+                <ellipse cx="120" cy="242" rx="7" ry="5" class="continent-line" />
+                <ellipse cx="65" cy="248" rx="6" ry="4" class="continent-line" />
+                <text x="90" y="262" class="continent-label-xs">AZUREMERE</text>
+
+                <!-- Sunreach - south centre -->
+                <path d="M160,220 L280,215 L300,230 L305,255 L295,275 L270,285 L240,288 L210,285 L185,272 L165,255 L155,238 Z" class="continent-line sunreach-line" />
+                <text x="230" y="255" class="continent-label">SUNREACH</text>
+                <text x="230" y="265" class="continent-sublabel">The Desert Empire</text>
+
+                <!-- Wildlands - south east -->
+                <path d="M320,200 L400,195 L420,212 L418,240 L405,258 L385,265 L358,262 L338,248 L325,228 Z" class="continent-line wildlands-line" />
+                <text x="372" y="232" class="continent-label-xs">WILDLANDS</text>
+
+                <!-- Trade routes -->
+                <path d="M248,148 L230,215 M248,148 L340,130 M100,130 L165,118 M390,148 L345,200" class="trade-route" />
+
+                <!-- Compass rose -->
+                <g transform="translate(460,290)">
+                  <circle cx="0" cy="0" r="18" class="compass-circle" />
+                  <line x1="0" y1="-14" x2="0" y2="14" class="compass-line" />
+                  <line x1="-14" y1="0" x2="14" y2="0" class="compass-line" />
+                  <line x1="-10" y1="-10" x2="10" y2="10" class="compass-line compass-diag" />
+                  <line x1="10" y1="-10" x2="-10" y2="10" class="compass-line compass-diag" />
+                  <text x="0" y="-16" class="compass-label">N</text>
+                  <text x="16" y="4" class="compass-label">E</text>
+                  <text x="-20" y="4" class="compass-label">W</text>
+                  <text x="0" y="22" class="compass-label">S</text>
+                </g>
+
+                <!-- Border frame -->
+                <rect x="5" y="5" width="490" height="370" class="map-border" />
+                <rect x="10" y="10" width="480" height="360" class="map-border-inner" />
+              </svg>
+            </div>
+            <div class="cover-title-wrap">
+              <div class="cover-rule"></div>
+              <h2 class="cover-title">The Chronicles</h2>
+              <h3 class="cover-subtitle">of Aethelgard</h3>
+              <div class="cover-rule"></div>
+              <p class="cover-volume">Volume I — The Official History</p>
+              <p class="cover-note">Compiled by the Council of Historians, Avaloria</p>
+              <p class="cover-note cover-warning">What follows is the truth as we understood it.</p>
+            </div>
+          </div>
+          <div class="cover-click-hint" id="coverHint">
+            <span>Open the Chronicle</span>
+            <div class="cover-arrow">→</div>
+          </div>
+        </div>
+
+        <!-- BOOK PAGES CONTAINER -->
+        <div class="book-pages" id="bookPages" style="display:none">
+
+          <!-- PAGE NAVIGATION -->
+          <div class="book-nav">
+            <button class="book-btn" id="prevBtn" onclick="prevPage()">← Previous</button>
+            <span class="book-page-indicator" id="pageIndicator">Chapter I of XI</span>
+            <button class="book-btn" id="nextBtn" onclick="nextPage()">Next →</button>
+          </div>
+
+          <!-- CHAPTER SELECT -->
+          <div class="chapter-select" id="chapterSelect">
+            <span class="chapter-select-label">Jump to:</span>
+            <select onchange="goToChapter(this.value)" id="chapterDropdown">
+              <option value="0">Chapter I — The Age of Empires</option>
+              <option value="1">Chapter II — The Accord Between Realms</option>
+              <option value="2">Chapter III — The Great War</option>
+              <option value="3">Chapter IV — The World After</option>
+              <option value="4">Chapter V — The Age of Castles</option>
+              <option value="5">Chapter VI — The Watchers</option>
+              <option value="6">Chapter VII — The Touched</option>
+              <option value="7">Chapter VIII — The Researcher</option>
+              <option value="8">Chapter IX — The Rebellion of Knowledge</option>
+              <option value="9">Chapter X — The Fifth Path</option>
+              <option value="10">Chapter XI — The Epilogue That Isn't</option>
+            </select>
+          </div>
+
+          <!-- CHAPTER PAGES -->
+          <div class="pages-wrap" id="pagesWrap">
+
+            <div class="page-spread active" id="chapter-0">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter I</div>
+                  <h3 class="chapter-title">The Age of Empires</h3>
+                  <div class="chapter-subtitle">Before the war, there was order</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">B</span>
+                    <p class="chapter-text">efore the age of castles, Aethelgard was a world of great empires — vast, ancient, and proud. The six races endured each other. Borders held. Trade moved. Children were born into a peace they had not earned and would not appreciate. For a thousand years, this endured.</p>
+                  </div>
+                  <p class="chapter-text">The empires were not kind. They were simply stable. The Elven kingdoms of Verdantia had maintained their forest sovereignty for six centuries without once being seriously challenged — partly through enchantment, partly through the collective wisdom that attacking a forest that is itself aware of your movements is an enterprise for the desperate. The Dwarven confederacy of Stoneheart had spent those same centuries digging deeper, accumulating wealth, and developing a reputation for weaponry so superior that starting a war with them was commercially unwise. The Human kingdoms occupied Avaloria and spread outward through every continent — the only race adaptable enough to thrive in every climate, annoying enough to be everywhere, and diplomatically skilled enough to make the other races tolerate their omnipresence.</p>
+                  <p class="chapter-text">Peace, in this context, meant that no empire was currently attempting to destroy any other empire in a total war. There were border skirmishes. There were proxy conflicts. There were trade wars that occasionally became naval blockades that occasionally became actual naval battles. But the great empires themselves remained intact. The map of Aethelgard changed slowly, in the way that coastlines change — gradually, almost imperceptibly, and then suddenly all at once.</p>
+                  <div class="page-number">1</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">The Mermen held their archipelago kingdoms and their trade routes with the quiet confidence of people who controlled something everyone else needed. Azuremere produced nothing that could not be grown or mined elsewhere — but it sat at the intersection of every significant maritime route, and that geography had made the Mermen quietly, enormously wealthy for three hundred years. The Harpy cities of Windspire maintained their aerial advantage and their studied neutrality with equal attention. The Ogre tribes of the Wildlands remained ungoverned in any conventional sense — a collection of shifting alliances and genuine loyalties that outsiders consistently underestimated and consistently paid for underestimating.</p>
+                  <p class="chapter-text">Shadowvale — which the oldest maps call Dawnvale — was in that era the most fertile land in Aethelgard. Its southern plains produced grain in quantities that fed half a continent. Its rivers ran clean and straight to the sea. What it was before it became what it is now is not recorded in any document that survives. The historians note the change. None of them explain it. This is the first thing about the official history that should make you suspicious.</p>
+                  <p class="chapter-text">In the unreachable places beyond mortal sight, this thousand years of managed stability bored the gods. In the equally unreachable planes where the demon court held its court, this bored the demon lord. The audience had been watching a long time. The game had grown predictable.</p>
+                  <blockquote class="chapter-quote">
+                    <p>"The great peace was not a gift. It was a wound that had stopped bleeding. A wound that the world had learned to call normal."</p>
+                    <cite>— From the Chronicles of Aethelgard, Volume I</cite>
+                  </blockquote>
+                  <div class="page-number">2</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-1">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter II</div>
+                  <h3 class="chapter-title">The Accord Between Realms</h3>
+                  <div class="chapter-subtitle">For the first and only time, they agreed</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">T</span>
+                    <p class="chapter-text">he gods exist in places that have no name in any mortal tongue — not above, not below, simply elsewhere. They are four: Sariel, who works through suggestion and whose fingerprint is the advisor with unnaturally perfect counsel; Urael, who only observes and who believes, alone among the four, that mortals might yet surprise everyone; and two whose names have no business appearing in a document this old.</p>
+                  </div>
+                  <p class="chapter-text">The demon court exists in a different elsewhere entirely. Its lord is Malgrath, who orchestrated what came next, and who is depicted in the ruins of Shadowvale as a robed figure with no face — which is the most accurate artistic representation of him that mortal hands have produced. Beside him sits Vaeris, the Demon King of Deception, who prefers chaos above all outcomes and who occasionally helps losing kingdoms survive simply to keep things interesting. He is, of the four, the most purely entertained by what follows.</p>
+                  <p class="chapter-text">For the first and only time in recorded or unrecorded history, both audiences agreed: the world had grown dull. The angels were dispatched — not visibly, never visibly. The demons found the ambitious ones and watered the grievances already growing in the dark. This required no great intervention. Every empire had enemies. Every border had old wounds. Every trade agreement had a clause that one party resented. The gods and the demon court did not create the conditions for war. They simply ensured that nothing would prevent it.</p>
+                  <div class="page-number">3</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">Sariel's method was characteristic. An advisor here — brilliant, seemingly loyal, carrying counsel so perfectly calibrated to its recipient's ambitions that the recipient never questioned where such clarity came from. A trade negotiation there — failing at exactly the moment it would cause maximum damage to the relationship between two kingdoms that had been cautiously cooperative for a generation. The drought in the Avaloria granary in the forty-third year of the last great peace that killed no one but created the food pressure that became the embargo that became the blockade that became the pretext.</p>
+                  <p class="chapter-text">Vaeris simply found the people who already wanted to burn everything and ensured they had opportunities they would not otherwise have had. His interventions were less elegant than Sariel's but more efficient. By the time the last empire fell, Vaeris had been involved in the decisions of forty-seven different military commanders. None of them knew. All of them believed they had been acting on their own judgment.</p>
+                  <p class="chapter-text">Urael watched. He has always watched. He is the only one of the four who has considered the possibility that what the gods are doing to Aethelgard might be wrong. He has not acted on this consideration. He watches.</p>
+                  <blockquote class="chapter-quote">
+                    <p>"The theologians argue endlessly about whether heaven and the abyss can communicate. I have stopped arguing. I have started asking a different question: what would it take for them to want to?"</p>
+                    <cite>— Fragment found pressed inside a Windspire library book. Author unknown.</cite>
+                  </blockquote>
+                  <div class="page-number">4</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-2">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter III</div>
+                  <h3 class="chapter-title">The Great War</h3>
+                  <div class="chapter-subtitle">Sixty years of fire</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">T</span>
+                    <p class="chapter-text">he great war lasted sixty years. Every empire fought. Every race bled. This is the part of history that everyone agrees on, because it is the part that left physical evidence — burned libraries, collapsed fortifications, coastlines reshaped by military engineering and magical warfare, entire cities that exist now only as names on maps too old to be updated.</p>
+                  </div>
+                  <p class="chapter-text">The causes are less agreed upon. Every surviving historical tradition has a version of events in which their own empire was responding to genuine provocation rather than initiating aggression. The Elven chronicles of Verdantia describe a Human trade embargo that violated three separate agreements. The Human records of the same period describe Elven interference in a succession crisis that was an internal matter. The Dwarven accounts focus almost exclusively on what they call the Stoneheart Betrayal, which the other races describe either as a defensive military action or as something that was entirely provoked by Dwarven policy decisions made a decade earlier. Everyone is technically correct about the sequence of events. Nobody is correct about the cause.</p>
+                  <p class="chapter-text">The war was not fought for any cause anyone could clearly name after the fact. This should have been suspicious. It was not. People who have survived sixty years of war are not, as a rule, in a philosophical mood about its origins. They are focused on the immediate problem of surviving the peace, which turns out to be its own challenge.</p>
+                  <div class="page-number">5</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">The angels and demons did not fight. They watched. They adjusted occasionally — a plague here, introduced at a moment when two kingdoms were about to reach a genuine settlement; a sudden military genius there, emerging from obscurity to prolong a conflict that was dying; a drought in Sunreach in year thirty-seven that redirected military priorities away from the western front and into a grain war that killed more people than the battles it replaced. None of these interventions were visible. All of them were deniable. Most of them were attributed to bad luck.</p>
+                  <p class="chapter-text">When the last empire collapsed, the gods and demons withdrew to their respective unreachable places — satisfied, for now, with what the world had become. They had not destroyed Aethelgard. They had simply rearranged it into something more interesting. Something with more moving parts. Something where every decision has real consequences and the outcome is genuinely uncertain. Something worth watching.</p>
+                  <p class="chapter-text">The great war ended not with a treaty but with exhaustion. The empires did not surrender to each other. They simply stopped being empires. What remained was a world of castles — thousands of independent strongholds, each one the survivor of something larger, each one convinced it had endured by its own strength. This conviction was, in most cases, incorrect. But it was useful. It made them want to try again.</p>
+                  <blockquote class="chapter-quote">
+                    <p>"We thought we were fighting for our land. Our honour. Our people. We were not. I know this now. I do not know how to unknow it. I do not know who to tell."</p>
+                    <cite>— Inscription on the Ruins of the Imperial Archive, Avaloria</cite>
+                  </blockquote>
+                  <div class="page-number">6</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-3">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter IV</div>
+                  <h3 class="chapter-title">The World After</h3>
+                  <div class="chapter-subtitle">The game begins</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">N</span>
+                    <p class="chapter-text">othing remained of the old empires. Only castles. Only strongholds. Thousands of small, desperate, hungry powers — each one convinced it had survived by its own strength, each one looking at its neighbours with the particular wariness of someone who knows exactly how quickly things can change because they have recently watched things change completely.</p>
+                  </div>
+                  <p class="chapter-text">The world the players inherit is this world. Not the world of great empires with their accumulated wisdom and bureaucratic stability. Not the world of the great peace with its thousand years of managed coexistence. The world of castles. The world where there is no central authority, no empire to appeal to, no ancient treaty that anyone is still obligated to honour. Just castles, and the decisions made by the people inside them.</p>
+                  <p class="chapter-text">The gods settled into their seats. The demon lord and his court did the same. The audience was ready. The game — the game they had engineered through sixty years of fire and a thousand years of subtle manipulation — was finally, properly, beginning. What the audience wanted was simple: genuine uncertainty. Real stakes. Decisions that mattered. They had arranged for all of these things. Now they wanted to watch what mortals would do with them.</p>
+                  <p class="chapter-text">This is where you begin. One castle. One world full of enemies. And somewhere in unreachable places — an audience that is very, very entertained.</p>
+                  <div class="page-number">7</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">The castles that survived the great war were not evenly distributed. Some continents — Avaloria, with its central position and its agricultural surplus — hosted hundreds of them. Others — the Wildlands, the Emberhold, the frozen reaches of Frostpeak — hosted fewer, their survivors hardened by environments that had killed the majority of those who attempted to build there. The archipelago of Azuremere offered its survivors the advantage of natural isolation and the disadvantage of limited land. Windspire's survivors built into the vertical geography that had always defined their homeland, and discovered that their floating strongholds, difficult to reach in peacetime, had become nearly impossible to assault in the chaos of the post-war world.</p>
+                  <p class="chapter-text">Shadowvale changed during the great war in ways that nobody has satisfactorily explained. The southern plains that once fed half a continent are gone. The rivers still run but their water has qualities that the mapmakers have consistently declined to describe in specific terms. The cities that existed there before the war are present in the records and absent from the land. Whatever happened to Shadowvale happened during the war. The timing has been noted. No one has been willing to follow the implication to its conclusion.</p>
+                  <p class="chapter-text">No one, except Scholar Iven of Sunreach. Whose journal ends mid-sentence. Whose subsequent whereabouts are unknown. Whose manuscript, hidden where he told someone, has not been found.</p>
+                  <p class="chapter-text italic-text">Not yet.</p>
+                  <div class="page-number">8</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-4">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter V</div>
+                  <h3 class="chapter-title">The Age of Castles</h3>
+                  <div class="chapter-subtitle">The world the player inherits</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">N</span>
+                    <p class="chapter-text">o empire remains. No throne commands more than a single stronghold's loyalty. The races no longer war along the old lines — those alliances dissolved with the empires that maintained them. What remains is a world where the political map is drawn fresh every generation and the only history that matters is recent.</p>
+                  </div>
+                  <p class="chapter-text">The libraries burned. This matters more than the castles that fell or the armies that were destroyed. Knowledge is harder to rebuild than walls. The magical research of the elven academies — centuries of accumulated understanding about the nature of mana, the control of elemental forces, the theory of enchantment — exists now only in fragments, scattered across ten continents in private collections, abandoned vaults, and the memories of people old enough to have studied before the war. The Human technomancy institutes are gone. The Dwarven engineering records, kept in the deepest vaults of Stoneheart, survived better than most — because underground chambers are resistant to the kind of destruction that fire produces — but even they are incomplete.</p>
+                  <p class="chapter-text">The world is, in certain important ways, less advanced than it was before the war. This is not immediately obvious. The castles that remain are sophisticated structures built on terrain in ways that the pre-war empires had developed over centuries. The military traditions are intact — the Dwarven infantry formations, the Elven ranger tactics, the Human combined-arms doctrine. But the theoretical foundations that could have produced the next generation of magical and technological development are scattered. The age of castles is also, therefore, an age of rediscovery.</p>
+                  <div class="page-number">9</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">This rediscovery is not neutral. Every piece of lost knowledge that a kingdom recovers is a competitive advantage. The magical school that one kingdom's researchers manage to reconstruct and another's cannot is a military and economic differentiator. The Dwarven manufacturing technique that someone pieces together from incomplete records is worth more than a season's worth of territory. The game of rediscovery runs parallel to the game of conquest, and the two interact in ways that make long-term research investment as strategically important as short-term military strength.</p>
+                  <p class="chapter-text">The continents themselves have changed since the war. Not dramatically — the geography is the same. But the infrastructure that made geography navigable is gone. Roads that connected cities have reverted to paths. Harbours that serviced trade fleets are overgrown or damaged. The magical communication networks that allowed empires to coordinate across continental distances are silent. Every castle starts, effectively, alone. The first connection any kingdom makes to any other is therefore significant — it is the beginning of the network that will eventually become either an empire or a grave.</p>
+                  <p class="chapter-text">This is the world. Not hopeless. Not destroyed. Simply returned to a point where everything has to be built again, and the question is not whether it will be built but who will be standing at the end of the building.</p>
+                  <div class="page-number">10</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-5">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter VI</div>
+                  <h3 class="chapter-title">The Watchers</h3>
+                  <div class="chapter-subtitle">The audience never left</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">T</span>
+                    <p class="chapter-text">he gods and demon court did not create the world. They simply found it and began to read. What they watch for is the unexpected — the moment a general defies logic and wins anyway, the moment a kingdom chooses mercy when cruelty would have been easier, the moment a player asks a question that the game was not obviously designed to answer.</p>
+                  </div>
+                  <p class="chapter-text">There are four of them. Sariel — the Whisperer — works through suggestion. Her presence in Aethelgard is felt in the advisor whose counsel is too perfect, the trade deal that falls apart at exactly the wrong moment, the drought that arrives precisely when it will cause maximum strategic damage. She does not appear. She adjusts. Kingdoms that have been touched by Sariel's attention tend to find themselves making decisions that seem reasonable in the moment and produce effects that take a generation to fully understand.</p>
+                  <p class="chapter-text">Urael — the Watcher — observes only. He is the anomaly among the four, the one who believes, alone, that mortals might yet do something that genuinely surprises the audience. He has watched Aethelgard for as long as the others. He has not intervened. He notes, in whatever passes for his private consideration, the moments when someone comes close to asking the right questions. He does not answer those questions. He simply notes that they were asked, and continues watching.</p>
+                  <div class="page-number">11</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">Malgrath — the demon lord — orchestrated the great war and considers it his finest achievement. He is depicted in the ruins of Shadowvale — in the stonework that predates the corruption, in carvings that the archaeologists who found them declined to document in their official reports — as a robed figure with no face. This is accurate. He finds the current age of castles genuinely entertaining. He has not had to intervene much. The mortals, he notes, are doing most of the interesting work themselves.</p>
+                  <p class="chapter-text">Vaeris — the Demon King of Deception — prefers chaos above all outcomes and finds order in any form mildly offensive. He is the one most likely to help a losing kingdom survive long enough to cause unexpected disruption. Not from sympathy. From aesthetic preference. A world where one power dominates too completely too quickly is, to Vaeris, a boring world. He prefers the version where the lead changes hands multiple times before the end, and he is willing to put his finger on the scales to produce that version when the game threatens to resolve too cleanly.</p>
+                  <p class="chapter-text">They are not gone. They are simply not visible. There is a difference — and it is a difference that one player, in one session, has come very close to understanding. How close they got, and what happened when they got close, is recorded in Chapter IX. It is not encouraging reading.</p>
+                  <div class="page-number">12</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-6">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter VII</div>
+                  <h3 class="chapter-title">The Touched</h3>
+                  <div class="chapter-subtitle">Some people are not entirely their own</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">I</span>
+                    <p class="chapter-text">n every generation, there are individuals who seem slightly more than what they should be. The general who reads a battlefield three moves ahead of every other commander alive. The merchant whose trade instincts border on prescience. The researcher who makes connections between fragments that nobody else would have thought to compare. Most of them are exactly what the world thinks — exceptional people produced by ordinary circumstances, the natural variation of talent and ambition in a population large enough to produce outliers.</p>
+                  </div>
+                  <p class="chapter-text">And some of them have been touched. Angels and demons occasionally place a hand on someone's shoulder, metaphorically, and adjust something small. An ambition that would have faded, kept alive. A talent that would have remained undiscovered, surfaced at the right moment. An opportunity that required exactly the right person in exactly the right position — arranged. The touched never know what they are. They experience their exceptional qualities as their own — as the product of their own effort, their own intelligence, their own choices. This is, from the perspective of the gods and demons, the most elegant part of the arrangement.</p>
+                  <p class="chapter-text">The touched are not puppets. Their decisions are genuinely their own. They have simply been given slightly better material to work with than most people — better circumstances, better timing, better access to the information and resources they need to become the particular kind of problem that the audience finds interesting. What they do with this slight advantage is entirely up to them. The gods and demons have learned, over a long time watching Aethelgard, that the most interesting outcomes come from touched individuals who develop in unexpected directions.</p>
+                  <div class="page-number">13</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">In game terms, the touched appear as characters with abilities that exceed what their background and training should produce. A general with a tactical intuition that borders on supernatural. A minister whose diplomatic instincts allow her to identify alliance opportunities that other advisors miss entirely. A researcher who makes breakthroughs at a rate that the mathematics of research progress cannot fully account for. Players who notice these characters and invest in them tend to find them worth the investment. Players who let them languish in minor roles may eventually find them serving someone else, in which case the advantage reverses.</p>
+                  <p class="chapter-text">There are currently, in the world of Aethelgard as it exists at the start of any given session, between twelve and twenty touched individuals distributed across the starting positions. None of them are labelled. There is no tooltip that says touched. The only indication is performance that exceeds expectation — which in a world full of characters with genuine personalities and genuine variability, is exactly the kind of thing that is easy to miss.</p>
+                  <p class="chapter-text">Sariel's touched tend toward advisory roles. They make the kingdoms around them stronger without being the obvious source of that strength. Vaeris's touched tend toward military and espionage roles — they are the ones who cause the most disruption relative to their apparent resources. Malgrath's touched are rarer and tend to appear in positions of authority, where their influence propagates through decisions that shape the political structure of entire regions. Urael's touched — the ones that the Watcher places, when he places any — are the researchers. They are the ones who get closest to the questions that were not meant to be asked.</p>
+                  <div class="page-number">14</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-7">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter VIII</div>
+                  <h3 class="chapter-title">The Researcher</h3>
+                  <div class="chapter-subtitle">Someone is always getting too close</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">I</span>
+                    <p class="chapter-text">n every era since the great war, there has been at least one person who asked the wrong questions loudly enough to become a problem. They are not, typically, military figures. They are not usually political leaders. They are the people who work in archives and libraries and research facilities, who have unrestricted access to records that nobody else has bothered to compare, and who have the particular combination of intellectual temperament and professional stubbornness that leads a person to follow an implication to its conclusion regardless of where the conclusion points.</p>
+                  </div>
+                  <p class="chapter-text">They notice small things. A date that does not match the official record — not by much, just by three days, but three days in the context of a particular event that the official record says happened simultaneously in three different locations is three days too many. A treaty sabotaged by someone who had access no foreign agent should have had — which means either the security failure was internal, or someone with no official existence was operating inside the archive. An advisor whose counsel proved, in retrospect, to have served not their employer's interests but something else — something that only becomes visible when you look at twenty years of advice laid out sequentially rather than session by session.</p>
+                  <p class="chapter-text">The researchers tend to have misfortunes. Not dramatic ones — the gods and demons are too subtle for dramatic ones. Just ordinary, entirely explainable misfortunes. Lost manuscripts. Papers that do not survive a fire that seems to have been quite limited in its damage to everything except the specific documents in question. Discredited reputations — someone finds grounds to question the methodology, raises the conflict of interest that the researcher failed to disclose, surfaces the personal grievance that might be motivating the conclusions. The researchers become footnotes. Their questions become cautionary tales about the dangers of motivated reasoning.</p>
+                  <div class="page-number">15</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">Most of them accept this outcome. They have families. They have careers. The discreditation hurts but it does not kill them, and the alternative — continuing to pursue a line of inquiry that has already produced one fire and one ruined reputation — is not obviously rational. They stop. They move on. They become aware, in a way they cannot discuss with anyone, that some questions are not meant to be answered, and they carry this awareness quietly for the rest of their lives.</p>
+                  <p class="chapter-text">A few of them do not stop. Scholar Iven of Sunreach was one of these. He was not touched — Urael's placed researchers tend to be more circumspect, more methodical, less inclined to announce what they have found before they have secured it. Iven was simply stubborn in the way that certain people are stubborn — the kind of stubborn that survives social pressure and professional damage and even, apparently, the loss of his most important documents in a fire that seemed quite limited in its damage to everything except the specific documents in question.</p>
+                  <blockquote class="chapter-quote">
+                    <p>"I have proven it. I have the documents. I know what caused the war, and it was not any of the empires, and it was not any of the races. I am going to Avaloria to present this to the Council of Historians. If you are reading this and I have not arrived — look for the manuscript. It is hidden where I told you. Do not let them make me into another footnote."</p>
+                    <cite>— Final entry, The Journal of Scholar Iven of Sunreach. His subsequent whereabouts are unknown.</cite>
+                  </blockquote>
+                  <p class="chapter-text">The Council of Historians has no record of his arrival.</p>
+                  <div class="page-number">16</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-8">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter IX</div>
+                  <h3 class="chapter-title">The Rebellion of Knowledge</h3>
+                  <div class="chapter-subtitle">What happens when the truth spreads</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">T</span>
+                    <p class="chapter-text">here has been, in all recorded history, exactly one moment when the truth came close to spreading beyond a single person. A ruler — whose name is not recorded in the official histories, and whose castle has been removed from the standard maps, and whose bloodline has been traced to no living descendants — managed to piece together enough of the hidden history to become convincing to others.</p>
+                  </div>
+                  <p class="chapter-text">This ruler had access to three things that most kingdoms do not. First, they controlled a significant portion of the Avaloria trade routes, which meant their intelligence network had reach across continental distances. Second, they had, in their service, a researcher who had independently reached conclusions parallel to Scholar Iven's — and who had survived this process only because they were cautious enough to share their findings with no one before sharing them with their ruler. Third, and most importantly, they had the encoded message in the castle stonework. The one that was dismissed, in every official architectural survey, as decorative coincidence.</p>
+                  <p class="chapter-text">The ruler read the stonework. They understood it. They used the intelligence network to find corroborating evidence in three separate continental archives. They spent four years building a case that could not be dismissed as motivated reasoning — a case with documents, with physical evidence, with a chain of inference that held up to external scrutiny. They were, by any reasonable standard, about to change everything.</p>
+                  <div class="page-number">17</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">Then strange things began to happen. The researcher died quietly in his sleep three days before the presentation was scheduled. The trade route network, which had taken a decade to build, experienced a series of disruptions that were individually explicable and collectively ruinous. Two of the three continental archives reported fires — one deliberately set by a local political faction with a plausible grievance, one caused by a candle left unattended by an archivist who had never previously been careless. The third archive's corroborating documents could not be located. They had been misfiled. The misfiling had been noticed but not corrected. The person responsible for correcting it had left the archive under circumstances that were personally difficult and professionally understandable.</p>
+                  <p class="chapter-text">The ruler understood the message. The presentation did not happen. They retired to their castle, removed from the active political situation, and lived out the remainder of their reign in a quiet that, to people who knew them, seemed less like peace and more like a decision that had been made and would not be revisited.</p>
+                  <p class="chapter-text">But they left something behind. Hidden in the architecture of their castle, encoded in the patterns of its stonework. A message for whoever would come after. It has been there for two hundred years. It has been surveyed seventeen times by architects working on renovations. It has been included in four academic papers as an example of decorative stonework patterns that recur across Aethel architectural traditions. No one has read it correctly.</p>
+                  <p class="chapter-text italic-text">No one, so far.</p>
+                  <div class="page-number">18</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-9">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter X</div>
+                  <h3 class="chapter-title">The Fifth Path</h3>
+                  <div class="chapter-subtitle">What no one knows is possible</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">T</span>
+                    <p class="chapter-text">here is one way to win in Aethelgard. Complete and utter dominance — the last independent power standing, all others submitted or destroyed. The game ends when there is no kingdom left that does not answer to yours. This is the victory. There is no other.</p>
+                  </div>
+                  <p class="chapter-text">And then there is the condition that is not listed anywhere in the game interface. Not in the tutorial. Not in the victory screen. Not in the advisor briefings or the strategic summaries or the end-of-session epilogues. It emerged from a gap in the planning of the gods and demons — an oversight in an otherwise careful arrangement, a door they left unlocked because they did not anticipate that anyone would find it, let alone try the handle.</p>
+                  <p class="chapter-text">The condition requires a kingdom to achieve something more difficult than military dominance: it requires patience, power, and the particular kind of curiosity that keeps asking questions after every reasonable person has decided that the questions are dangerous. Gather the scattered evidence. Decode the hidden message in the Avaloria castle stonework. Find Scholar Iven's manuscript, hidden in Sunreach where he told someone whose identity is itself encoded in the stonework. Understand, fully and completely, what was done to Aethelgard and why and by whom.</p>
+                  <p class="chapter-text">And then present the full truth to every surviving kingdom simultaneously, in a way that cannot be denied, cannot be suppressed, and cannot be made into another footnote.</p>
+                  <div class="page-number">19</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">When this happens — if this happens — the gods respond. This is the part that was not anticipated. The gods did not build a response into their arrangement because they did not believe a response would be necessary. They built a world designed to be permanently entertaining. They did not build an exit.</p>
+                  <p class="chapter-text">What the gods say when they respond has never been written, because it has never happened. The condition has been approached twice in recorded history — once by the ruler described in Chapter IX, once by a figure whose existence is attested only in fragmentary sources and who may be the same person as Scholar Iven or may be someone else entirely. Neither of them completed it. The gods ensured that they did not.</p>
+                  <p class="chapter-text">The fifth condition is not a reward. It is not a better ending or a secret achievement. It is a confrontation. The player who reaches it does not win by exposing the gods — they win by making the gods respond. By making the audience part of the game. By turning the watchers into participants. What happens in that confrontation is not determined by the history of Aethelgard. It is not determined by the lore written in this chronicle. It is determined by what is said in that room, in that moment, by the player who got there.</p>
+                  <p class="chapter-text">The answer is yours to design. The designer has left it open deliberately. Some stories should not be finished before they are lived.</p>
+                  <blockquote class="chapter-quote">
+                    <p>"The fifth victory is not a reward. It is a confrontation. The player does not win by exposing the gods — they win by making the gods respond."</p>
+                    <cite>— Designer's Note, Realms of Eternal War</cite>
+                  </blockquote>
+                  <div class="page-number">20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-spread" id="chapter-10">
+              <div class="page page-left">
+                <div class="page-inner">
+                  <div class="chapter-ornament">✦</div>
+                  <div class="chapter-number">Chapter XI</div>
+                  <h3 class="chapter-title">The Epilogue That Isn't</h3>
+                  <div class="chapter-subtitle">The game has no end</div>
+                  <div class="chapter-rule"></div>
+                  <div class="chapter-drop-cap-wrap">
+                    <span class="drop-cap">E</span>
+                    <p class="chapter-text">very ruler who achieves victory believes they have finished the story. They have not. They have finished a chapter. The gods move their attention elsewhere temporarily. The castles that remain continue. They rebuild. They re-arm. The defeated kingdoms — the ones who submitted and kept playing and waited — begin, carefully, quietly, to explore the boundaries of what their submission actually prohibits. Some of them find that the boundaries are softer than they appeared at the moment of defeat.</p>
+                  </div>
+                  <p class="chapter-text">The audience settles back in. The game has no end. It only has intermissions. This is not a flaw in the design. It is the point. A world that can be finished is a world that can be exhausted. A world that can only be paused is a world that continues to be worth watching — which means it continues to be worth playing.</p>
+                  <p class="chapter-text">Every session of Realms of Eternal War ends with a unique epilogue shaped by the decisions made throughout. The military ruler who achieved dominance through conquest has an epilogue that acknowledges the cost — the castles destroyed, the populations displaced, the relationships severed that will not be rebuilt in a generation. The ruler who achieved dominance through economic encirclement has an epilogue that reflects the different kind of resentment that financial subjugation produces compared to military defeat. The ruler who built their dominance on diplomatic excellence has an epilogue that notes, carefully, that the alliances which brought them victory are already, quietly, beginning to negotiate what comes next.</p>
+                  <div class="page-number">21</div>
+                </div>
+              </div>
+              <div class="page page-right">
+                <div class="page-inner">
+                  <p class="chapter-text">No two sessions of Realms of Eternal War are the same game. The map is the same. The continents are fixed. The races are consistent. But the decisions made by the players — decisions that could have gone differently, that were made under pressure with incomplete information, that will be second-guessed in retrospect by every player who made them — produce outcomes that are genuinely unique. This is the promise of the game and the reason it is worth playing more than once.</p>
+                  <p class="chapter-text">The gods and the demon court know this. They have been watching Aethelgard for longer than any mortal history records. They have seen sessions that ended in military crushes that took twelve turns. They have seen sessions that lasted generations of in-game time, with empires rising and falling multiple times before the final resolution. They have seen alliances of such genuine complexity that even Sariel, who considers herself the most sophisticated political thinker among the four, found herself surprised by how they developed. They have not, yet, seen the fifth condition completed.</p>
+                  <p class="chapter-text">They are, all four of them, curious about what happens when it is.</p>
+                  <blockquote class="chapter-quote large-quote">
+                    <p>"History does not end with the crowning of a victor. It ends when there is no one left to remember that there was ever anything else. Aethelgard is a long way from that."</p>
+                    <cite>— Closing line, The Chronicles of Aethelgard</cite>
+                  </blockquote>
+                  <div class="book-end-ornament">
+                    <div class="end-rule"></div>
+                    <span>✦ FINIS ✦</span>
+                    <div class="end-rule"></div>
+                  </div>
+                  <div class="page-number">22</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end pagesWrap -->
+        </div><!-- end bookPages -->
+
+      </div><!-- end book -->
+    </div><!-- end bookContainer -->
   </section>
 
   <!-- DEV LOG SECTION -->
