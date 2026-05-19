@@ -290,11 +290,10 @@ console.log('%cIn Development — Unreal Engine 5', 'color:#8b0000;font-size:11p
 let currentChapter = 0;
 const totalChapters = 11;
 let bookOpen = false;
+let isTurning = false;
 
-// Open book on cover click
 const bookCover = document.getElementById('bookCover');
 const bookPages = document.getElementById('bookPages');
-const coverHint = document.getElementById('coverHint');
 
 if (bookCover) {
   bookCover.addEventListener('click', openBook);
@@ -303,31 +302,26 @@ if (bookCover) {
 function openBook() {
   if (bookOpen) return;
   bookOpen = true;
-
-  // Animate cover away
-  bookCover.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  bookCover.style.transition = 'all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
   bookCover.style.opacity = '0';
-  bookCover.style.transform = 'translateX(-60px) rotateY(-20deg) scale(0.95)';
-
+  bookCover.style.transform = 'perspective(800px) rotateY(-25deg) translateX(-40px) scale(0.92)';
   setTimeout(() => {
     bookCover.style.display = 'none';
     bookPages.style.display = 'block';
     bookPages.style.opacity = '0';
-    bookPages.style.transform = 'translateY(20px)';
     requestAnimationFrame(() => {
-      bookPages.style.transition = 'all 0.5s ease';
+      bookPages.style.transition = 'opacity 0.5s ease';
       bookPages.style.opacity = '1';
-      bookPages.style.transform = 'translateY(0)';
     });
-    updateBookState();
-  }, 550);
+    currentChapter = 0;
+    renderChapter();
+  }, 650);
 }
 
 function closeBook() {
   bookOpen = false;
-  bookPages.style.transition = 'all 0.4s ease';
+  bookPages.style.transition = 'opacity 0.4s ease';
   bookPages.style.opacity = '0';
-  bookPages.style.transform = 'translateY(20px)';
   setTimeout(() => {
     bookPages.style.display = 'none';
     bookCover.style.display = 'block';
@@ -339,59 +333,64 @@ function closeBook() {
 }
 
 function nextPage() {
-  if (currentChapter < totalChapters - 1) {
-    animatePageTurn('next');
+  if (isTurning || currentChapter >= totalChapters - 1) return;
+  isTurning = true;
+  turnPage('next', () => {
     currentChapter++;
-    updateBookState();
-  }
+    renderChapter();
+    isTurning = false;
+  });
 }
 
 function prevPage() {
-  if (currentChapter > 0) {
-    animatePageTurn('prev');
+  if (isTurning || currentChapter <= 0) return;
+  isTurning = true;
+  turnPage('prev', () => {
     currentChapter--;
-    updateBookState();
-  }
+    renderChapter();
+    isTurning = false;
+  });
 }
 
-function goToChapter(index) {
-  currentChapter = parseInt(index);
-  updateBookState();
-}
+function turnPage(direction, callback) {
+  const spread = document.getElementById('chapter-' + currentChapter);
+  if (!spread) { callback(); return; }
 
-function animatePageTurn(direction) {
-  const currentSpread = document.getElementById('chapter-' + currentChapter);
-  if (!currentSpread) return;
+  // Page curl effect — skew + translate simulating a page turning
+  const exitX = direction === 'next' ? '-110%' : '110%';
+  const entryX = direction === 'next' ? '110%' : '-110%';
+  const skewDir = direction === 'next' ? '-8deg' : '8deg';
 
-  currentSpread.style.transition = 'all 0.3s ease';
-  currentSpread.style.opacity = '0';
-  currentSpread.style.transform = direction === 'next'
-    ? 'translateX(-30px)'
-    : 'translateX(30px)';
+  spread.style.transition = 'all 0.45s cubic-bezier(0.55, 0, 1, 0.45)';
+  spread.style.transform = `translateX(${exitX}) skewY(${skewDir})`;
+  spread.style.opacity = '0';
 
   setTimeout(() => {
-    currentSpread.classList.remove('active');
-    currentSpread.style.opacity = '';
-    currentSpread.style.transform = '';
-    currentSpread.style.transition = '';
+    spread.classList.remove('active');
+    spread.style.transform = '';
+    spread.style.opacity = '';
+    spread.style.transition = '';
 
-    const nextSpread = document.getElementById('chapter-' + currentChapter);
-    if (nextSpread) {
-      nextSpread.style.opacity = '0';
-      nextSpread.style.transform = direction === 'next'
-        ? 'translateX(30px)'
-        : 'translateX(-30px)';
-      nextSpread.classList.add('active');
+    callback();
+
+    const next = document.getElementById('chapter-' + currentChapter);
+    if (next) {
+      next.style.transform = `translateX(${entryX}) skewY(${direction === 'next' ? '8deg' : '-8deg'})`;
+      next.style.opacity = '0';
+      next.style.transition = 'none';
+      next.classList.add('active');
       requestAnimationFrame(() => {
-        nextSpread.style.transition = 'all 0.35s ease';
-        nextSpread.style.opacity = '1';
-        nextSpread.style.transform = 'translateX(0)';
+        requestAnimationFrame(() => {
+          next.style.transition = 'all 0.45s cubic-bezier(0, 0.55, 0.45, 1)';
+          next.style.transform = 'translateX(0) skewY(0)';
+          next.style.opacity = '1';
+        });
       });
     }
-  }, 300);
+  }, 450);
 }
 
-function updateBookState() {
+function renderChapter() {
   // Update active spread
   document.querySelectorAll('.page-spread').forEach(s => s.classList.remove('active'));
   const active = document.getElementById('chapter-' + currentChapter);
@@ -413,7 +412,7 @@ function updateBookState() {
       'X — The Fifth Path',
       'XI — The Epilogue That Isn\'t'
     ];
-    indicator.textContent = 'Chapter ' + chapterNames[currentChapter];
+    indicator.textContent = 'Chapter ' + (chapterNames[currentChapter] || '');
   }
 
   // Update buttons
@@ -422,27 +421,17 @@ function updateBookState() {
   if (prevBtn) prevBtn.disabled = currentChapter === 0;
   if (nextBtn) nextBtn.disabled = currentChapter === totalChapters - 1;
 
-  // Sync dropdown
-  const dropdown = document.getElementById('chapterDropdown');
-  if (dropdown) dropdown.value = currentChapter;
-
-  // Scroll book into view smoothly
-  const bookContainer = document.getElementById('bookContainer');
-  if (bookContainer && bookOpen) {
-    bookContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Scroll book nav into view
+  const bookNav = document.querySelector('.book-nav');
+  if (bookNav && bookOpen) {
+    bookNav.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
-// Keyboard navigation for book
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
   if (!bookOpen) return;
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-    e.preventDefault();
-    nextPage();
-  }
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-    e.preventDefault();
-    prevPage();
-  }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); nextPage(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevPage(); }
   if (e.key === 'Escape') closeBook();
 });

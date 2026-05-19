@@ -459,7 +459,7 @@ section {
 }
 
 .race-card {
-  height: 300px;
+  height: 360px;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -480,11 +480,12 @@ section {
   inset: 0;
   backface-visibility: hidden;
   border: 1px solid var(--border);
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 3px;
+  overflow: hidden;
 }
 
 .race-card-front {
@@ -497,7 +498,13 @@ section {
   background: var(--bg-4);
   border-color: var(--border-strong);
   transform: rotateY(180deg);
+  justify-content: flex-start;
+  overflow-y: auto;
 }
+
+.race-card-back::-webkit-scrollbar { width: 3px; }
+.race-card-back::-webkit-scrollbar-track { background: transparent; }
+.race-card-back::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
 
 .race-emblem {
   font-size: 3rem;
@@ -564,10 +571,23 @@ section {
 }
 
 .race-home {
-  font-size: 0.8rem;
-  color: var(--text-dim);
+  font-size: 0.78rem;
+  color: rgba(180,80,80,0.7);
   font-style: italic;
-  margin-top: auto;
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+
+.race-weakness {
+  font-size: 0.78rem;
+  color: rgba(180,80,80,0.8);
+  font-style: italic;
+  margin-top: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 2px solid rgba(139,0,0,0.4);
+  background: rgba(139,0,0,0.05);
+  line-height: 1.4;
 }
 
 /* Character Showcase */
@@ -949,7 +969,7 @@ section {
 }
 
 .system-card {
-  height: 200px;
+  height: 220px;
   perspective: 800px;
   cursor: pointer;
 }
@@ -977,16 +997,23 @@ section {
   background: var(--bg-3);
   border-radius: 3px;
   gap: 0.6rem;
+  overflow: hidden;
 }
 
 .system-back {
   transform: rotateY(180deg);
   background: var(--bg-4);
   border-color: var(--border-strong);
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   text-align: left;
+  overflow-y: auto;
+  gap: 0.4rem;
 }
+
+.system-back::-webkit-scrollbar { width: 3px; }
+.system-back::-webkit-scrollbar-track { background: transparent; }
+.system-back::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
 
 .system-icon { font-size: 2rem; }
 
@@ -1208,105 +1235,45 @@ section {
   gap: 2rem;
 }
 
-/* Cover Map SVG */
+/* Cover Map Image */
 .cover-map {
   width: 100%;
-  border: 1px solid rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.2);
   border-radius: 2px;
-  background: rgba(201,168,76,0.02);
-  padding: 0.5rem;
+  overflow: hidden;
+  background: #0a0805;
 }
 
-.cover-svg {
+.cover-map-img {
   width: 100%;
   height: auto;
   display: block;
+  filter: sepia(0.8) contrast(1.1) brightness(0.75) saturate(0.3);
+  transition: filter 0.4s ease;
 }
 
-.continent-line {
-  fill: none;
-  stroke: rgba(201,168,76,0.45);
-  stroke-width: 1.2;
-  stroke-linejoin: round;
+.book-cover:hover .cover-map-img {
+  filter: sepia(0.6) contrast(1.15) brightness(0.85) saturate(0.4);
 }
 
-.shadowvale-line { stroke: rgba(139,0,0,0.6); }
-.ember-line { stroke: rgba(180,80,20,0.6); }
-.avaloria-line { stroke: rgba(201,168,76,0.7); }
-.verdantia-line { stroke: rgba(60,120,40,0.6); }
-.wildlands-line { stroke: rgba(120,40,160,0.5); stroke-dasharray: 3,2; }
-.sunreach-line { stroke: rgba(200,160,40,0.6); }
-
-.continent-label {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  fill: rgba(201,168,76,0.8);
-  text-anchor: middle;
-  letter-spacing: 1px;
+.book-nav-centre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
 }
 
-.continent-label-sm {
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  fill: rgba(201,168,76,0.7);
-  text-anchor: middle;
-  letter-spacing: 1px;
+.book-close-btn {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color var(--transition);
 }
 
-.continent-label-xs {
-  font-family: 'Cinzel', serif;
-  font-size: 5.5px;
-  fill: rgba(201,168,76,0.6);
-  text-anchor: middle;
-  letter-spacing: 0.5px;
-}
-
-.continent-sublabel {
-  font-family: 'Cinzel', serif;
-  font-size: 4.5px;
-  fill: rgba(201,168,76,0.4);
-  text-anchor: middle;
-  font-style: italic;
-}
-
-.trade-route {
-  fill: none;
-  stroke: rgba(201,168,76,0.2);
-  stroke-width: 0.8;
-  stroke-dasharray: 4,3;
-}
-
-.compass-circle {
-  fill: none;
-  stroke: rgba(201,168,76,0.3);
-  stroke-width: 0.8;
-}
-
-.compass-line {
-  stroke: rgba(201,168,76,0.5);
-  stroke-width: 0.8;
-}
-
-.compass-diag { stroke: rgba(201,168,76,0.25); }
-
-.compass-label {
-  font-family: 'Cinzel', serif;
-  font-size: 5px;
-  fill: rgba(201,168,76,0.6);
-  text-anchor: middle;
-}
-
-.map-border {
-  fill: none;
-  stroke: rgba(201,168,76,0.25);
-  stroke-width: 1;
-}
-
-.map-border-inner {
-  fill: none;
-  stroke: rgba(201,168,76,0.12);
-  stroke-width: 0.5;
-}
+.book-close-btn:hover { color: var(--crimson-light); }
 
 /* Cover Title Area */
 .cover-title-wrap {
@@ -1439,39 +1406,6 @@ section {
   text-transform: uppercase;
   color: var(--text-dim);
 }
-
-.chapter-select {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.chapter-select-label {
-  font-family: var(--font-heading);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-
-.chapter-select select {
-  flex: 1;
-  background: var(--bg-3);
-  border: 1px solid var(--border);
-  color: var(--gold);
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
-  padding: 0.5rem 1rem;
-  border-radius: 2px;
-  cursor: pointer;
-  outline: none;
-  min-width: 200px;
-}
-
-.chapter-select select:focus { border-color: var(--border-strong); }
 
 /* Page Spread */
 .pages-wrap { position: relative; }
