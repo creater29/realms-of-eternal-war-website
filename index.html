@@ -1,115 +1,200 @@
 <!DOCTYPE html>
-<html lang="en" style="--baropacity: 0.9;">
+<html lang="en" style="--baropacity:0.9;">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui,viewport-fit=cover">
   <title>Realms of Eternal War · Ten Realms. One War.</title>
   <meta name="description" content="A multiplayer grand strategy game across ten continents. One castle. One world. Last power standing.">
-  <meta property="og:title" content="Realms of Eternal War · Ten Realms. One War.">
-  <meta property="og:description" content="A multiplayer grand strategy game across ten continents. One castle. One world. Last power standing.">
-  <meta name="theme-color" content="#000000">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- ═══════════════════════════════════════════════════════════
-       BASE — exact copy from Active Theory source
-  ═══════════════════════════════════════════════════════════ -->
   <style>
-    #Stage,body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;-ms-content-zooming:none;-ms-touch-action:none;touch-action:none;background:#000}
-    /* nbarchitekt → Space Mono substitute */
-    @font-face{font-family:"nbarchitekt";src:local("Space Mono"),local("IBM Plex Mono"),local("Courier New");font-weight:400}
-    @font-face{font-family:"nbarchitekt";src:local("Space Mono"),local("IBM Plex Mono"),local("Courier New");font-weight:700}
-    .ios,.ios #Stage,.ios body{overflow:visible}
-    .ios,.mob{position:relative;height:100vh}
-    .GLA11y{position:absolute;width:0;height:100%;clip:rect(0 0 0 0);overflow:hidden}
+    /* ── BASE — verbatim Active Theory ── */
+    #Stage,body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;touch-action:none;background:#000}
+    @font-face{font-family:"nbarchitekt";src:local("Space Mono"),local("Courier New");font-weight:400}
+    @font-face{font-family:"nbarchitekt";src:local("Space Mono"),local("Courier New");font-weight:700}
     :root{--baropacity:0.0}
     ::-webkit-scrollbar{width:8px}
     ::-webkit-scrollbar-track{background:transparent}
     ::-webkit-scrollbar-thumb{background:rgba(255,255,255,var(--baropacity,0.9));border-radius:10px}
-    #Stage,#Stage *{user-select:none;-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:none}
+    #Stage,#Stage *{user-select:none;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:none}
     #Stage *,#Stage ::after,#Stage ::before{box-sizing:border-box}
-    #Stage * input,#Stage * textarea{-moz-user-select:auto;-webkit-user-select:auto;-o-user-select:auto;-ms-user-select:auto}
-  </style>
+    #Stage * input,#Stage * textarea{-webkit-user-select:auto}
+    .GLA11y{position:absolute;width:0;height:100%;clip:rect(0 0 0 0);overflow:hidden}
 
-  <!-- ═══════════════════════════════════════════════════════════
-       GOOBER — exact copy of Active Theory _goober styles
-       with nbarchitekt → "Space Mono", monospace substitution
-  ═══════════════════════════════════════════════════════════ -->
-  <style id="_goober">
-    /* ── ChatDOM ─────────────────────────────────────────────── */
+    /* ── INTRO RING LOADER ── */
+    #intro-ring{
+      position:fixed;inset:0;z-index:200;
+      display:flex;align-items:center;justify-content:center;
+      background:#000;pointer-events:none;
+    }
+    .ring-wrap{
+      position:relative;
+      width:min(55vmin,420px);height:min(55vmin,420px);
+    }
+    .ring-svg-outer{
+      position:absolute;inset:0;
+      animation:spin-cw 12s linear infinite;
+    }
+    .ring-svg-mid{
+      position:absolute;inset:0;
+      animation:spin-ccw 8s linear infinite;
+    }
+    .ring-svg-inner{
+      position:absolute;inset:0;
+      animation:spin-cw 20s linear infinite;
+    }
+    .ring-svg-arc{
+      position:absolute;inset:0;
+    }
+    .ring-center{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;
+    }
+    .ring-title{
+      font-family:'Space Mono',monospace;
+      font-size:clamp(28px,5vmin,44px);
+      font-weight:700;
+      letter-spacing:0.12em;
+      color:#fff;
+      text-shadow:0 0 30px rgba(201,168,76,0.8),0 0 60px rgba(201,168,76,0.4);
+    }
+    .ring-sub{
+      font-family:'Space Mono',monospace;
+      font-size:clamp(7px,1.2vmin,10px);
+      font-weight:400;
+      letter-spacing:0.35em;
+      text-transform:uppercase;
+      color:rgba(201,168,76,0.6);
+    }
+    @keyframes spin-cw  {to{transform:rotate(360deg)}}
+    @keyframes spin-ccw {to{transform:rotate(-360deg)}}
+    @keyframes draw-arc {
+      0%  {stroke-dashoffset:1200}
+      80% {stroke-dashoffset:0}
+      100%{stroke-dashoffset:0}
+    }
+    @keyframes ring-out{
+      0%  {opacity:1;transform:scale(1)}
+      60% {opacity:1;transform:scale(0.95)}
+      100%{opacity:0;transform:scale(0.15)}
+    }
+    .ring-exiting{animation:ring-out 0.9s cubic-bezier(.55,0,1,.45) forwards!important}
+
+    /* ── CHAT DOM — verbatim AT ── */
     .ChatDOM .wrapper{display:flex;flex-direction:column;justify-content:flex-end;padding:3rem 3rem;mix-blend-mode:color-dodge;pointer-events:none;position:fixed;bottom:0;left:0;z-index:3;width:min(450px,100%);height:calc(100% - 100px);background-color:transparent;}
     @media(max-width:768px){.ChatDOM .wrapper{padding:2rem 2rem;mix-blend-mode:normal;}}
     .ChatDOM .messages{display:flex;flex-direction:column-reverse;justify-content:flex-start;overflow:hidden;margin-bottom:1rem;height:100%;-webkit-mask-image:linear-gradient(to top,white 0%,white 75%,transparent 90%);}
     .ChatDOM .messages p,.ChatDOM .messages a{font-family:"Space Mono","nbarchitekt",monospace;font-size:14px;font-weight:400;line-height:1.5;margin:6px 0;margin-left:10px;white-space:pre-wrap;}
     @media(max-width:768px){.ChatDOM .messages p,.ChatDOM .messages a{font-size:13px;margin:4px 0;}}
-    @keyframes cursor-blink{0%{background:transparent;}25%{background:transparent;}50%{background:#00ffff;}75%{background:#00ffff;}100%{background:transparent;}}
-    .ChatDOM .messages p.blink::after,.ChatDOM .messages a.blink::after{content:"";position:absolute;width:8px;height:12px;margin-top:4px;margin-left:10px;border:none;background-color:#00ffff;display:inline-block;animation:cursor-blink 1.5s infinite;}
-    .ChatDOM a{color:#c6c6c6;pointer-events:auto;cursor:pointer;font-weight:700;width:fit-content;transition:all 0.4s cubic-bezier(.17,.4,.02,.99);transform:translateX(0px);}
-    @media(max-width:768px){.ChatDOM a{color:#eeeeee;}.ChatDOM a.home{color:#9ca5ff;}}
-    .ChatDOM a.active{color:#ffffff;text-shadow:#ffffff 1px 0px 5px;transform:translateX(10px);}
-    @media(hover:hover){.ChatDOM a:hover{color:#ffffff;font-weight:400;}}
-    .ChatDOM textarea{background:rgba(0,0,0,0.2);color:rgba(255,255,255,0.7);font-family:"Space Mono","nbarchitekt",monospace;font-weight:400;font-size:14px;outline:none;border:2px solid rgba(255,255,255,0.3);border-radius:50px;padding:14px 25px 4px;transition:all 0.8s cubic-bezier(.17,.4,.02,.99);width:200px;white-space:nowrap;min-height:40px;resize:none;pointer-events:auto;overflow:hidden;}
-    @media(max-width:768px){.ChatDOM textarea{font-size:13px;}}
-    .ChatDOM textarea:hover{border:2px solid rgba(255,255,255,0.5);}
-    .ChatDOM textarea:focus{color:#eeeeee;background:rgba(0,0,0,0.5);border:2px solid rgba(255,255,255,0.8);}
-    .ChatDOM textarea.extended{background:rgba(0,0,0,0.5);border:2px solid rgba(255,255,255,0.9);width:330px;}
-    .ChatDOM textarea::placeholder{color:rgba(255,255,255,0.4);}
-    @keyframes dot-flashing{0%{background-color:#00ffff;box-shadow:0 1px 6px #00ffff;}50%,100%{background-color:rgba(200,255,255,0.2);}}
-    .ChatDOM .flashing{position:relative;left:37px;bottom:32px;width:12px;height:12px;border-radius:6px;background-color:#00ffff;color:#00ffff;opacity:0.3;animation:dot-flashing 1.5s infinite linear alternate;animation-delay:0.75s;}
-    .ChatDOM .flashing::before,.ChatDOM .flashing::after{content:"";display:inline-block;position:absolute;top:0;width:12px;height:12px;border-radius:6px;color:#00ffff;opacity:1;background-color:#00ffff;animation:dot-flashing 1.5s infinite alternate;}
-    .ChatDOM .flashing::before{left:-25px;animation-delay:0s;}
-    .ChatDOM .flashing::after{left:25px;animation-delay:1.5s;}
+    @keyframes cursor-blink{0%{background:transparent}25%{background:transparent}50%{background:#00ffff}75%{background:#00ffff}100%{background:transparent}}
+    .ChatDOM .messages p.blink::after,.ChatDOM .messages a.blink::after{content:"";position:absolute;width:8px;height:12px;margin-top:4px;margin-left:10px;background-color:#00ffff;display:inline-block;animation:cursor-blink 1.5s infinite}
+    .ChatDOM a{color:#c6c6c6;pointer-events:auto;cursor:pointer;font-weight:700;width:fit-content;transition:all 0.4s cubic-bezier(.17,.4,.02,.99);transform:translateX(0px)}
+    @media(max-width:768px){.ChatDOM a{color:#eeeeee}.ChatDOM a.home{color:#9ca5ff}}
+    .ChatDOM a.active{color:#ffffff;text-shadow:#ffffff 1px 0px 5px;transform:translateX(10px)}
+    @media(hover:hover){.ChatDOM a:hover{color:#ffffff;font-weight:400}}
+    .ChatDOM textarea{background:rgba(0,0,0,0.2);color:rgba(255,255,255,0.7);font-family:"Space Mono","nbarchitekt",monospace;font-weight:400;font-size:14px;outline:none;border:2px solid rgba(255,255,255,0.3);border-radius:50px;padding:14px 25px 4px;transition:all 0.8s cubic-bezier(.17,.4,.02,.99);width:200px;white-space:nowrap;min-height:40px;resize:none;pointer-events:auto;overflow:hidden}
+    .ChatDOM textarea:hover{border:2px solid rgba(255,255,255,0.5)}
+    .ChatDOM textarea:focus{color:#eeeeee;background:rgba(0,0,0,0.5);border:2px solid rgba(255,255,255,0.8)}
+    .ChatDOM textarea.extended{background:rgba(0,0,0,0.5);border:2px solid rgba(255,255,255,0.9);width:330px}
+    .ChatDOM textarea::placeholder{color:rgba(255,255,255,0.4)}
+    @keyframes dot-flashing{0%{background-color:#00ffff;box-shadow:0 1px 6px #00ffff}50%,100%{background-color:rgba(200,255,255,0.2)}}
+    .ChatDOM .flashing{position:relative;left:37px;bottom:32px;width:12px;height:12px;border-radius:6px;background-color:#00ffff;opacity:0.3;animation:dot-flashing 1.5s infinite linear alternate;animation-delay:0.75s}
+    .ChatDOM .flashing::before,.ChatDOM .flashing::after{content:"";display:inline-block;position:absolute;top:0;width:12px;height:12px;border-radius:6px;background-color:#00ffff;animation:dot-flashing 1.5s infinite alternate}
+    .ChatDOM .flashing::before{left:-25px;animation-delay:0s}
+    .ChatDOM .flashing::after{left:25px;animation-delay:1.5s}
 
-    /* ── CookieBanner ────────────────────────────────────────── */
-    .CookieBanner{width:100%;height:100%;}
-    .CookieBanner .wrapper{position:fixed;bottom:40px;right:32px;z-index:999999;cursor:default;width:370px;height:180px;padding:16px 28px 32px;background-color:rgba(0,0,0,0.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,0.3);border-radius:12px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;}
-    @media(max-width:768px){.CookieBanner .wrapper{bottom:0;left:0;right:0;width:100%;border-radius:12px 12px 0 0;}}
-    .CookieBanner .buttons{width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center;gap:12px;}
-    .CookieBanner p,.CookieBanner a{font-family:"Space Mono","nbarchitekt",monospace;font-size:14px;font-weight:400;line-height:1.5;margin:6px 0;white-space:pre-wrap;}
-    .CookieBanner p{color:white;}
-    .CookieBanner a{color:#c6c6c6;pointer-events:auto;cursor:pointer;font-weight:700;}
-    .CookieBanner button{cursor:pointer;padding:4px 18px;border-radius:500px;border:2px solid rgba(255,255,255,0.5);transition:all 0.2s ease-out;}
-    .CookieBanner button p{font-size:12px;color:white;}
-    .CookieBanner button.accept{background:#9ca5ff55;}
-    .CookieBanner button.reject{background:#00000055;}
-    @media(hover:hover){.CookieBanner button:hover{box-shadow:0 1px 6px #ffffff55;}.CookieBanner button:hover p{font-weight:700;text-shadow:#ffffff99 0px 0px 5px;}.CookieBanner button.accept:hover{background:#9ca5ff22;}.CookieBanner button.reject:hover{background:#00000011;}}
+    /* ── COOKIE — verbatim AT ── */
+    .CookieBanner .wrapper{position:fixed;bottom:40px;right:32px;z-index:999999;cursor:default;width:370px;height:180px;padding:16px 28px 32px;background-color:rgba(0,0,0,0.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,0.3);border-radius:12px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px}
+    @media(max-width:768px){.CookieBanner .wrapper{bottom:0;left:0;right:0;width:100%;border-radius:12px 12px 0 0}}
+    .CookieBanner .buttons{width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center;gap:12px}
+    .CookieBanner p,.CookieBanner a{font-family:"Space Mono","nbarchitekt",monospace;font-size:14px;font-weight:400;line-height:1.5;margin:6px 0;white-space:pre-wrap}
+    .CookieBanner p{color:white}
+    .CookieBanner a{color:#c6c6c6;pointer-events:auto;cursor:pointer;font-weight:700}
+    .CookieBanner button{cursor:pointer;padding:4px 18px;border-radius:500px;border:2px solid rgba(255,255,255,0.5);transition:all 0.2s ease-out}
+    .CookieBanner button p{font-size:12px;color:white}
+    .CookieBanner button.accept{background:#9ca5ff55}
+    .CookieBanner button.reject{background:#00000055}
+    @media(hover:hover){.CookieBanner button:hover{box-shadow:0 1px 6px #ffffff55}.CookieBanner button:hover p{font-weight:700;text-shadow:#ffffff99 0px 0px 5px}.CookieBanner button.accept:hover{background:#9ca5ff22}.CookieBanner button.reject:hover{background:#00000011}}
 
-    /* ── MusicPlayerDOM ──────────────────────────────────────── */
-    .MusicPlayerDOM .wrapper{display:flex;flex-direction:row;justify-content:space-between;align-items:center;mix-blend-mode:plus-lighter;position:fixed;top:70px;right:32px;margin:2.6rem 2.6rem;z-index:3;padding:10px 4px;pointer-events:none;border:1px solid rgba(255,255,255,0.1);background-color:transparent;width:170px;height:42px;border-radius:7px;opacity:0;transition:all 0.4s ease-out;}
-    @media(max-width:768px){.MusicPlayerDOM .wrapper{top:55px;margin:2rem 2rem;}}
-    .MusicPlayerDOM .wrapper:hover{opacity:1;}
-    .MusicPlayerDOM button{width:36px;height:32px;pointer-events:auto;cursor:pointer;background-color:rgba(255,255,255,0.1);border-radius:5px;border:1px solid rgba(255,255,255,0.6);mix-blend-mode:color-dodge;font-family:"Space Mono","nbarchitekt",monospace;font-size:14px;font-weight:700;color:white;display:flex;align-items:center;justify-content:center;opacity:0.3;transition:all 0.4s ease-out;}
-    .MusicPlayerDOM button:hover{opacity:1;}
-    @keyframes ticker{0%{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);visibility:visible;}100%{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);}}
-    .MusicPlayerDOM .ticker{display:inline-block;height:30px;line-height:30px;width:80px;overflow:hidden;background-color:transparent;white-space:nowrap;opacity:0.4;box-sizing:content-box;mix-blend-mode:color-dodge;}
-    .MusicPlayerDOM .ticker>*{display:inline-block;height:30px;margin:0;animation-iteration-count:infinite;animation-timing-function:linear;animation-name:ticker;animation-duration:9s;padding:0 0.8rem;font-family:"Space Mono","nbarchitekt",monospace;font-size:10px;font-weight:400;color:white;}
+    /* ── MUSIC PLAYER — verbatim AT ── */
+    .MusicPlayerDOM .wrapper{display:flex;flex-direction:row;justify-content:space-between;align-items:center;mix-blend-mode:plus-lighter;position:fixed;top:70px;right:32px;margin:2.6rem 2.6rem;z-index:3;padding:10px 4px;pointer-events:none;border:1px solid rgba(255,255,255,0.1);background-color:transparent;width:170px;height:42px;border-radius:7px;opacity:0;transition:opacity 2000ms cubic-bezier(0.215,0.61,0.355,1) 1500ms}
+    @media(max-width:768px){.MusicPlayerDOM .wrapper{top:55px;margin:2rem 2rem}}
+    .MusicPlayerDOM button{width:36px;height:32px;pointer-events:auto;cursor:pointer;background-color:rgba(255,255,255,0.1);border-radius:5px;border:1px solid rgba(255,255,255,0.6);mix-blend-mode:color-dodge;font-family:"Space Mono","nbarchitekt",monospace;font-size:14px;font-weight:700;color:white;display:flex;align-items:center;justify-content:center;opacity:0.3;transition:all 0.4s ease-out}
+    .MusicPlayerDOM button:hover{opacity:1}
+    @keyframes ticker{0%{transform:translate3d(0,0,0);visibility:visible}100%{transform:translate3d(-100%,0,0)}}
+    .MusicPlayerDOM .ticker{display:inline-block;height:30px;line-height:30px;width:80px;overflow:hidden;background-color:transparent;white-space:nowrap;opacity:0.4;box-sizing:content-box;mix-blend-mode:color-dodge}
+    .MusicPlayerDOM .ticker>*{display:inline-block;height:30px;margin:0;animation-iteration-count:infinite;animation-timing-function:linear;animation-name:ticker;animation-duration:9s;padding:0 0.8rem;font-family:"Space Mono","nbarchitekt",monospace;font-size:10px;font-weight:400;color:white}
 
-    /* ── NavigationUI (pill — RoEW adaptation) ───────────────── */
-    .NavigationUI{position:fixed;top:24px;right:24px;z-index:999;display:flex;align-items:center;}
-    .NavigationUI .pill{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,0.2);border-radius:500px;overflow:hidden;background:transparent;}
-    .NavigationUI .link{display:block;padding:7px 18px;font-family:"Space Mono","nbarchitekt",monospace;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.4s cubic-bezier(.17,.4,.02,.99);white-space:nowrap;pointer-events:auto;cursor:pointer;}
-    .NavigationUI .link:hover{color:#ffffff;}
-    .NavigationUI .sep{width:1px;height:18px;background:rgba(255,255,255,0.2);flex-shrink:0;}
+    /* ── NAV PILL — AT style ── */
+    .NavigationUI{position:fixed;top:24px;right:24px;z-index:999;display:flex;align-items:center}
+    .NavigationUI .pill{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,0.2);border-radius:500px;overflow:hidden;background:transparent}
+    .NavigationUI .link{display:block;padding:7px 18px;font-family:"Space Mono","nbarchitekt",monospace;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.4s cubic-bezier(.17,.4,.02,.99);white-space:nowrap;pointer-events:auto;cursor:pointer}
+    .NavigationUI .link:hover{color:#ffffff}
+    .NavigationUI .sep{width:1px;height:18px;background:rgba(255,255,255,0.2);flex-shrink:0}
   </style>
 </head>
 <body>
+<div id="Stage">
 
-<div id="Stage" style="width:100%;height:100%;cursor:auto;">
+  <!-- ACCESSIBILITY -->
+  <div class="GLA11y" style="z-index:-1">
+    <a href="world.html">Enter Aethelgard</a>
+    <a href="https://www.instagram.com/realms_of_eternal_war/">Follow</a>
+  </div>
 
-  <!-- ACCESSIBILITY LAYER — exact AT pattern -->
-  <div class="GLA11y" style="z-index:-1;">
-    <div class="NavigationUI" style="position:relative">
-      <a class="link" href="world.html" aria-label="Enter Aethelgard">Enter Aethelgard</a>
-      <a class="link" href="https://www.instagram.com/realms_of_eternal_war/" aria-label="Follow">Follow</a>
+  <!-- WEBGL CANVAS -->
+  <div class="Container" style="position:static">
+    <canvas id="glcanvas" style="background:#000;pointer-events:none;display:block"></canvas>
+  </div>
+
+  <!-- INTRO RING LOADER -->
+  <div id="intro-ring">
+    <div class="ring-wrap">
+
+      <!-- Outer ring — slow CW -->
+      <svg class="ring-svg-outer" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="188" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <!-- 48 tick marks -->
+        <g id="ticks"></g>
+      </svg>
+
+      <!-- Drawing arc -->
+      <svg class="ring-svg-arc" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="188" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"
+                stroke-dasharray="1181" stroke-dashoffset="1181"
+                transform="rotate(-90 200 200)"
+                style="animation:draw-arc 1.8s cubic-bezier(.17,.4,.02,.99) 0.2s forwards"/>
+      </svg>
+
+      <!-- Mid ring — CCW -->
+      <svg class="ring-svg-mid" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="160" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+        <circle cx="200" cy="200" r="158" stroke="rgba(201,168,76,0.12)" stroke-width="0.5" stroke-dasharray="6 4"/>
+        <!-- 4 corner diamonds -->
+        <rect x="197" y="38" width="6" height="6" fill="rgba(201,168,76,0.6)" transform="rotate(45 200 41)"/>
+        <rect x="197" y="358" width="6" height="6" fill="rgba(201,168,76,0.6)" transform="rotate(45 200 361)"/>
+        <rect x="38" y="197" width="6" height="6" fill="rgba(201,168,76,0.6)" transform="rotate(45 41 200)"/>
+        <rect x="358" y="197" width="6" height="6" fill="rgba(201,168,76,0.6)" transform="rotate(45 361 200)"/>
+      </svg>
+
+      <!-- Inner ring — slow CW -->
+      <svg class="ring-svg-inner" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="118" stroke="rgba(139,0,0,0.3)" stroke-width="0.8" stroke-dasharray="8 5"/>
+        <circle cx="200" cy="200" r="100" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+      </svg>
+
+      <!-- Centre text — static -->
+      <div class="ring-center">
+        <div class="ring-title">RoEW</div>
+        <div class="ring-sub">Realms of Eternal War</div>
+      </div>
+
     </div>
   </div>
 
-  <!-- WEBGL CANVAS — exact AT Container pattern -->
-  <div class="Container" style="position:static;">
-    <canvas id="glcanvas" style="background:black;pointer-events:none;display:block;"></canvas>
-  </div>
-
-  <!-- NAVIGATION PILL — visible DOM nav -->
+  <!-- NAV PILL -->
   <div class="NavigationUI">
     <div class="pill">
       <a class="link" href="world.html">Enter Aethelgard</a>
@@ -118,317 +203,475 @@
     </div>
   </div>
 
-  <!-- CHAT DOM — exact AT structure + RoEW content -->
-  <div class="ChatDOM" addto="Stage">
-    <div class="wrapper" style="opacity:0;transition:opacity 200ms cubic-bezier(0.47,0,0.745,0.715);display:none;">
+  <!-- CHAT DOM -->
+  <div class="ChatDOM">
+    <div class="wrapper" style="opacity:0;transition:opacity 400ms cubic-bezier(0.39,0.575,0.565,1);display:none">
       <div class="messages">
-        <a title="-> follow the journey" class="home" data-action="follow">-&gt; follow the journey</a>
-        <a title="-> the chronicles" class="home" data-action="lore">-&gt; the chronicles</a>
-        <a title="-> the six races" class="home" data-action="races">-&gt; the six races</a>
-        <a title="-> the world" class="home" data-action="world">-&gt; the world</a>
-        <p style="color:rgb(244,244,244);">What are you looking for?</p>
+        <a class="home" data-action="follow">-&gt; follow the journey</a>
+        <a class="home" data-action="lore">-&gt; the chronicles</a>
+        <a class="home" data-action="races">-&gt; the six races</a>
+        <a class="home" data-action="world">-&gt; the world</a>
+        <p style="color:rgb(244,244,244)">What are you looking for?</p>
       </div>
       <textarea class="input" maxlength="100" placeholder="Ask me anything..."></textarea>
-      <div class="flashing" style="opacity:0;"></div>
+      <div class="flashing" style="opacity:0"></div>
     </div>
   </div>
 
-  <!-- COOKIE BANNER — exact AT structure -->
-  <div class="CookieBanner" addto="Stage" style="display:none;">
-    <div class="wrapper" style="opacity:0;transition:opacity 400ms cubic-bezier(0.39,0.575,0.565,1);">
-      <p class="text">This site remembers only your notification preference. No tracking. Details in <a href="world.html" target="_blank">our approach.</a></p>
+  <!-- COOKIE -->
+  <div class="CookieBanner" style="display:none">
+    <div class="wrapper" style="opacity:0;transition:opacity 400ms ease">
+      <p>This site stores only your notification preference. No tracking. See <a href="world.html">our approach.</a></p>
       <div class="buttons">
-        <button class="accept" aria-label="Accept" style="cursor:pointer;"><p class="textAccept">Accept</p></button>
-        <button class="reject" aria-label="Dismiss" style="cursor:pointer;"><p class="textReject">Dismiss</p></button>
+        <button class="accept"><p>Accept</p></button>
+        <button class="reject"><p>Dismiss</p></button>
       </div>
     </div>
   </div>
 
-  <!-- MUSIC PLAYER — exact AT structure + RoEW tracks -->
-  <div class="MusicPlayerDOM" addto="Stage">
-    <div class="wrapper" style="opacity:0;transform:translate3d(0px,0px,0px);transition:opacity 2000ms cubic-bezier(0.215,0.61,0.355,1) 1500ms,-webkit-transform 2000ms cubic-bezier(0.215,0.61,0.355,1) 1500ms;">
-      <button class="arrowL" aria-label="Previous" style="cursor:pointer;"><p class="textL">&lt;&lt;</p></button>
-      <div class="ticker" style="transition:opacity 1000ms cubic-bezier(0.39,0.575,0.565,1) 200ms;opacity:0.5;">
+  <!-- MUSIC PLAYER -->
+  <div class="MusicPlayerDOM">
+    <div class="wrapper">
+      <button class="arrowL"><p>&lt;&lt;</p></button>
+      <div class="ticker">
         <div class="tickerItem0">1. War of Aethelgard</div>
         <div class="tickerItem1">1. War of Aethelgard</div>
       </div>
-      <button class="arrowR" aria-label="Next" style="cursor:pointer;"><p class="textR">&gt;&gt;</p></button>
+      <button class="arrowR"><p>&gt;&gt;</p></button>
     </div>
   </div>
 
-</div><!-- #Stage -->
+</div>
 
-<!-- THREE.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <script>
 (function(){
-  'use strict';
+'use strict';
 
-  /* ── CANVAS + RENDERER ─────────────────────────────────────── */
-  const canvas = document.getElementById('glcanvas');
-  const W = ()=> window.innerWidth;
-  const H = ()=> window.innerHeight;
+/* ═══════════════════════════════════════════════════
+   TICK MARKS on intro ring SVG
+═══════════════════════════════════════════════════ */
+(function buildTicks(){
+  const g = document.getElementById('ticks');
+  if(!g) return;
+  for(let i=0;i<48;i++){
+    const angle = (i/48)*Math.PI*2 - Math.PI/2;
+    const isMain = i%12===0, isMid = i%6===0;
+    const r1 = 188, r2 = 188 - (isMain?14:isMid?9:5);
+    const x1=200+r1*Math.cos(angle), y1=200+r1*Math.sin(angle);
+    const x2=200+r2*Math.cos(angle), y2=200+r2*Math.sin(angle);
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+    line.setAttribute('stroke', isMain?'rgba(255,255,255,0.5)':isMid?'rgba(255,255,255,0.25)':'rgba(255,255,255,0.12)');
+    line.setAttribute('stroke-width', isMain?'1.5':isMid?'1':'0.8');
+    g.appendChild(line);
+  }
+})();
 
-  // Match exact AT canvas sizing pattern
-  canvas.width  = W() * devicePixelRatio;
-  canvas.height = H() * devicePixelRatio;
-  canvas.style.width  = W() + 'px';
-  canvas.style.height = H() + 'px';
+/* ═══════════════════════════════════════════════════
+   INTRO RING EXIT SEQUENCE
+═══════════════════════════════════════════════════ */
+const introEl = document.getElementById('intro-ring');
+setTimeout(()=>{
+  introEl.classList.add('ring-exiting');
+  setTimeout(()=>{ introEl.style.display='none'; }, 900);
+}, 2800);
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
-  renderer.setSize(W(), H());
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 1);
+/* ═══════════════════════════════════════════════════
+   THREE.JS SETUP
+═══════════════════════════════════════════════════ */
+const canvas = document.getElementById('glcanvas');
+const W=()=>window.innerWidth, H=()=>window.innerHeight;
 
-  const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(42, W()/H(), 0.1, 100);
-  camera.position.set(0, 0, 3.8);
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
+renderer.setSize(W(),H()); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setClearColor(0x000000,1);
 
-  window.addEventListener('resize', ()=>{
-    camera.aspect = W()/H();
-    camera.updateProjectionMatrix();
-    renderer.setSize(W(), H());
-    canvas.style.width  = W()+'px';
-    canvas.style.height = H()+'px';
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(42,W()/H(),0.1,100);
+camera.position.set(0,0,4.5);
+
+window.addEventListener('resize',()=>{
+  camera.aspect=W()/H(); camera.updateProjectionMatrix();
+  renderer.setSize(W(),H());
+});
+
+/* ═══════════════════════════════════════════════════
+   BONE / SPINE STRUCTURE — centre piece
+═══════════════════════════════════════════════════ */
+const boneGroup = new THREE.Group();
+scene.add(boneGroup);
+
+/* — vertical spine rod — */
+const spineGeo = new THREE.CylinderGeometry(0.012,0.012,3.2,8);
+const spineMat = new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.35});
+boneGroup.add(new THREE.Mesh(spineGeo,spineMat));
+
+/* — spine glow (soft tube around spine) — */
+const spineGlowGeo = new THREE.CylinderGeometry(0.04,0.04,3.0,16);
+const spineGlowMat = new THREE.MeshBasicMaterial({color:0xc9a84c,transparent:true,opacity:0.05,side:THREE.BackSide});
+boneGroup.add(new THREE.Mesh(spineGlowGeo,spineGlowMat));
+
+/* — core at origin (double octahedron) — */
+const coreGroup = new THREE.Group();
+// Solid dark inner
+coreGroup.add(new THREE.Mesh(
+  new THREE.OctahedronGeometry(0.30,0),
+  new THREE.MeshPhongMaterial({color:0x03030a,emissive:0x0c0c28,shininess:200,specular:0x8888ff,transparent:true,opacity:0.95})
+));
+// Gold wireframe shell
+coreGroup.add(new THREE.Mesh(
+  new THREE.OctahedronGeometry(0.32,0),
+  new THREE.MeshBasicMaterial({color:0xc9a84c,wireframe:true,transparent:true,opacity:0.55})
+));
+// Outer glow
+coreGroup.add(new THREE.Mesh(
+  new THREE.SphereGeometry(0.55,16,16),
+  new THREE.MeshBasicMaterial({color:0xc9a84c,transparent:true,opacity:0.038,side:THREE.BackSide})
+));
+// Second glow layer
+coreGroup.add(new THREE.Mesh(
+  new THREE.SphereGeometry(0.80,16,16),
+  new THREE.MeshBasicMaterial({color:0xc9a84c,transparent:true,opacity:0.012,side:THREE.BackSide})
+));
+boneGroup.add(coreGroup);
+
+/* — vertebrae nodes along spine — */
+const vertebraeY = [-1.20,-0.78,-0.38, 0.38, 0.78, 1.20];
+vertebraeY.forEach((y,i)=>{
+  const isUpper = y>0;
+  const color  = isUpper ? 0xc9a84c : 0x8b0000;
+  const size   = 0.072 - Math.abs(y)*0.012;
+
+  // Diamond node
+  const node = new THREE.Mesh(
+    new THREE.OctahedronGeometry(size,0),
+    new THREE.MeshBasicMaterial({color,transparent:true,opacity:0.75})
+  );
+  node.position.y = y;
+  node.rotation.y = i*0.8;
+  boneGroup.add(node);
+
+  // Disc ring at each vertebra
+  const discR = 0.18 + Math.abs(y)*0.12;
+  const disc = new THREE.Mesh(
+    new THREE.RingGeometry(discR, discR+0.009, 80),
+    new THREE.MeshBasicMaterial({
+      color: isUpper?0xc9a84c:0x8b0000,
+      transparent:true, opacity:0.30+Math.abs(y)*0.05,
+      side:THREE.DoubleSide
+    })
+  );
+  disc.position.y = y;
+  disc.rotation.x = Math.PI/2;
+  disc.rotation.z = i*0.4;
+  boneGroup.add(disc);
+
+  // Thin rib lines from node outward
+  const ribCount = isUpper ? 4 : 3;
+  for(let r=0;r<ribCount;r++){
+    const ang = (r/ribCount)*Math.PI*2 + i*0.5;
+    const len = discR*1.3;
+    const verts = new Float32Array([0,y,0, Math.cos(ang)*len,y,Math.sin(ang)*len]);
+    const ribGeo = new THREE.BufferGeometry();
+    ribGeo.setAttribute('position',new THREE.BufferAttribute(verts,3));
+    boneGroup.add(new THREE.Line(ribGeo,
+      new THREE.LineBasicMaterial({color,transparent:true,opacity:0.25})
+    ));
+  }
+});
+
+/* — outer orbital rings (the AT-style large rings around bone) — */
+function mkRing(inner,outer,color,opacity,rx,rz){
+  const m=new THREE.Mesh(
+    new THREE.RingGeometry(inner,outer,256),
+    new THREE.MeshBasicMaterial({color,transparent:true,opacity,side:THREE.DoubleSide})
+  );
+  m.rotation.x=rx; m.rotation.z=rz; return m;
+}
+const R1=mkRing(0.88,0.882,0xc9a84c,0.50,Math.PI/2.1,0.18);
+const R2=mkRing(1.15,1.152,0x8b0000,0.30,Math.PI/3.0,Math.PI/5);
+const R3=mkRing(1.42,1.422,0xc9a84c,0.18,Math.PI/4.0,Math.PI/4);
+const R4=mkRing(1.68,1.682,0x343755,0.22,Math.PI/6.0,Math.PI/3.5);
+const R5=mkRing(1.95,1.952,0x8b0000,0.10,Math.PI/2.8,Math.PI/2.5);
+[R1,R2,R3,R4,R5].forEach(r=>boneGroup.add(r));
+
+/* ═══════════════════════════════════════════════════
+   ORBITING INFO SLABS
+═══════════════════════════════════════════════════ */
+const RACE_DATA=[
+  {name:'HUMANS',      sub:'The Adaptable Innovators',    col:0xc9a84c, speed:0.28, radius:2.10, inc:0.20, phase:0.00},
+  {name:'ELVES',       sub:'Masters of Ancient Wisdom',   col:0x33bb55, speed:0.23, radius:2.30, inc:0.85, phase:1.05},
+  {name:'DWARVES',     sub:'Craftsmen of the Deep Earth', col:0x888888, speed:0.32, radius:1.95, inc:-0.55,phase:2.09},
+  {name:'OGRE TRIBES', sub:'Warriors of the Borderlands', col:0x993322, speed:0.26, radius:2.20, inc:0.42, phase:3.14},
+  {name:'MERMEN',      sub:'Rulers of the Seas',          col:0x0099cc, speed:0.30, radius:2.05, inc:-0.72,phase:4.19},
+  {name:'HARPIES',     sub:'Masters of the Skies',        col:0x4488ff, speed:0.25, radius:2.25, inc:0.65, phase:5.24},
+];
+
+function makeSlabTexture(name,sub,col){
+  const W=480,H=132,cv=document.createElement('canvas');
+  cv.width=W; cv.height=H;
+  const cx=cv.getContext('2d');
+  const r=(col>>16)&0xff,g=(col>>8)&0xff,b=col&0xff;
+
+  // Background
+  cx.fillStyle='rgba(0,0,0,0.82)'; cx.fillRect(0,0,W,H);
+
+  // Left accent bar
+  cx.fillStyle=`rgba(${r},${g},${b},0.95)`; cx.fillRect(0,0,3,H);
+
+  // Full border
+  cx.strokeStyle=`rgba(${r},${g},${b},0.35)`;
+  cx.lineWidth=1; cx.strokeRect(0.5,0.5,W-1,H-1);
+
+  // Top separator line
+  cx.strokeStyle=`rgba(${r},${g},${b},0.2)`;
+  cx.lineWidth=1; cx.beginPath(); cx.moveTo(3,H*0.55); cx.lineTo(W,H*0.55); cx.stroke();
+
+  // Corner bracket top-right
+  cx.strokeStyle=`rgba(${r},${g},${b},0.5)`;
+  cx.lineWidth=1;
+  cx.beginPath(); cx.moveTo(W-22,4); cx.lineTo(W-4,4); cx.lineTo(W-4,22); cx.stroke();
+
+  // Corner bracket bot-left
+  cx.beginPath(); cx.moveTo(22,H-4); cx.lineTo(4,H-4); cx.lineTo(4,H-22); cx.stroke();
+
+  // Name text
+  cx.fillStyle='#ffffff';
+  cx.font='bold 24px monospace';
+  cx.letterSpacing='3px';
+  cx.fillText(name,18,44);
+
+  // Subtitle
+  cx.fillStyle='#c6c6c6';
+  cx.font='15px monospace';
+  cx.letterSpacing='1px';
+  cx.fillText(sub,18,85);
+
+  // Small label bottom right
+  cx.fillStyle=`rgba(${r},${g},${b},0.5)`;
+  cx.font='10px monospace';
+  cx.textAlign='right';
+  cx.fillText('AETHELGARD',W-10,H-10);
+
+  return new THREE.CanvasTexture(cv);
+}
+
+const slabObjects=[];
+const tmpQ=new THREE.Quaternion();
+
+RACE_DATA.forEach(d=>{
+  const tex=makeSlabTexture(d.name,d.sub,d.col);
+  const geo=new THREE.PlaneGeometry(1.55,0.43);
+  const mat=new THREE.MeshBasicMaterial({
+    map:tex, transparent:true, opacity:0.90,
+    side:THREE.DoubleSide, depthWrite:false,
+  });
+  const slab=new THREE.Mesh(geo,mat);
+
+  // Edge glow frame
+  const r=(d.col>>16)&0xff,g=(d.col>>8)&0xff,b=d.col&0xff;
+  const edgeGeo=new THREE.EdgesGeometry(new THREE.BoxGeometry(1.58,0.46,0.002));
+  const edgeMat=new THREE.LineBasicMaterial({color:d.col,transparent:true,opacity:0.4});
+  const edge=new THREE.LineSegments(edgeGeo,edgeMat);
+  slab.add(edge);
+
+  // Orbit group — tilt defines orbital plane inclination
+  const orbitGroup=new THREE.Group();
+  orbitGroup.rotation.x=d.inc;
+  orbitGroup.rotation.z=d.phase*0.15;
+  scene.add(orbitGroup);
+
+  // Position group at orbital radius
+  const posGroup=new THREE.Group();
+  posGroup.position.set(d.radius,0,0);
+  posGroup.add(slab);
+  orbitGroup.add(posGroup);
+
+  slabObjects.push({orbitGroup,posGroup,slab,d});
+});
+
+/* ═══════════════════════════════════════════════════
+   PARTICLES
+═══════════════════════════════════════════════════ */
+const PC=3200;
+const pP=new Float32Array(PC*3),pC=new Float32Array(PC*3);
+for(let i=0;i<PC;i++){
+  const r=2.2+Math.pow(Math.random(),0.35)*2.5;
+  const t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1);
+  pP[i*3]=r*Math.sin(p)*Math.cos(t); pP[i*3+1]=r*Math.cos(p)*1.4; pP[i*3+2]=r*Math.sin(p)*Math.sin(t);
+  const rnd=Math.random();
+  if(rnd<0.55){pC[i*3]=0.79+Math.random()*0.12;pC[i*3+1]=0.50+Math.random()*0.20;pC[i*3+2]=0.10+Math.random()*0.12;}
+  else if(rnd<0.78){pC[i*3]=0.55+Math.random()*0.25;pC[i*3+1]=0.01;pC[i*3+2]=0;}
+  else{pC[i*3]=0.15+Math.random()*0.12;pC[i*3+1]=0;pC[i*3+2]=0.35+Math.random()*0.28;}
+}
+const pGeo=new THREE.BufferGeometry();
+pGeo.setAttribute('position',new THREE.BufferAttribute(pP,3));
+pGeo.setAttribute('color',new THREE.BufferAttribute(pC,3));
+const ptcl=new THREE.Points(pGeo,
+  new THREE.PointsMaterial({size:0.025,vertexColors:true,transparent:true,opacity:0.60,sizeAttenuation:true})
+);
+scene.add(ptcl);
+
+/* ═══════════════════════════════════════════════════
+   LIGHTING
+═══════════════════════════════════════════════════ */
+scene.add(new THREE.AmbientLight(0x0a0a18,3));
+const L1=new THREE.PointLight(0xc9a84c,1.5,15); L1.position.set(2,1.5,3); scene.add(L1);
+const L2=new THREE.PointLight(0x8b0000,0.8,10); L2.position.set(-2,-1.5,-3); scene.add(L2);
+const L3=new THREE.PointLight(0xc9a84c,0.5,8);  L3.position.set(0,0,0); scene.add(L3);
+
+/* ═══════════════════════════════════════════════════
+   MOUSE
+═══════════════════════════════════════════════════ */
+let mX=0,mY=0,cX=0,cY=0;
+document.addEventListener('mousemove',e=>{mX=(e.clientX/W()-0.5);mY=(e.clientY/H()-0.5);});
+document.addEventListener('touchmove',e=>{
+  if(e.touches[0]){mX=(e.touches[0].clientX/W()-0.5);mY=(e.touches[0].clientY/H()-0.5);}
+},{passive:true});
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION LOOP
+═══════════════════════════════════════════════════ */
+const clock=new THREE.Clock();
+
+(function tick(){
+  requestAnimationFrame(tick);
+  const t=clock.getElapsedTime();
+
+  // Bone structure — slow breathe + rotate
+  boneGroup.rotation.y += 0.0022;
+  boneGroup.rotation.x = Math.sin(t*0.18)*0.04;
+
+  // Core pulse
+  const pulse=0.98+Math.sin(t*1.4)*0.02;
+  coreGroup.scale.setScalar(pulse);
+  coreGroup.rotation.y += 0.008;
+  coreGroup.rotation.z += 0.003;
+
+  // Orbital rings rotate independently
+  R1.rotation.y+=0.0032; R2.rotation.x+=0.0020;
+  R3.rotation.z+=0.0025; R4.rotation.y-=0.0018; R5.rotation.x-=0.0012;
+
+  // Orbiting slabs
+  slabObjects.forEach(({orbitGroup,posGroup,slab,d})=>{
+    // Advance orbit
+    orbitGroup.rotation.y += d.speed * 0.004;
+
+    // Billboard: make slab face camera in world space
+    const parentQuat = new THREE.Quaternion();
+    posGroup.getWorldQuaternion(parentQuat);
+    camera.getWorldQuaternion(tmpQ);
+    // Slab local quat = inv(parent world) * camera world
+    slab.quaternion.copy(parentQuat.invert().multiply(tmpQ));
   });
 
-  /* ── GLOBE ─────────────────────────────────────────────────── */
-  const globeG = new THREE.Group();
-  scene.add(globeG);
+  // Particles drift
+  ptcl.rotation.y+=0.0003; ptcl.rotation.x=mY*0.04;
 
-  globeG.add(new THREE.Mesh(
-    new THREE.SphereGeometry(1,80,40),
-    new THREE.MeshPhongMaterial({color:0x040408,shininess:20,specular:0x1a1a2e})
-  ));
+  // Orbiting gold light
+  L1.position.x=Math.sin(t*0.32)*3; L1.position.z=Math.cos(t*0.32)*3;
 
-  globeG.add(new THREE.Mesh(
-    new THREE.SphereGeometry(1.07,32,32),
-    new THREE.MeshBasicMaterial({color:0x1a0830,transparent:true,opacity:0.18,side:THREE.BackSide})
-  ));
+  // Mouse parallax on camera
+  cX+=(mY*0.28-cX)*0.03; cY+=(mX*0.28-cY)*0.03;
+  camera.position.x+=(mX*0.30-camera.position.x)*0.02;
+  camera.position.y+=(-mY*0.25-camera.position.y)*0.02;
+  camera.lookAt(0,0,0);
 
-  globeG.add(new THREE.Mesh(
-    new THREE.SphereGeometry(1.002,18,9),
-    new THREE.MeshBasicMaterial({color:0xc9a84c,wireframe:true,transparent:true,opacity:0.022})
-  ));
+  renderer.render(scene,camera);
+})();
 
-  /* continent line helpers */
-  function ll(lat,lng,r){
-    r=r||1.005;
-    const phi=(90-lat)*Math.PI/180,theta=(lng+180)*Math.PI/180;
-    return new THREE.Vector3(-r*Math.sin(phi)*Math.cos(theta),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(theta));
-  }
-  function makeLine(pts,color,opacity){
-    const v=[];
-    for(let i=0;i<pts.length-1;i++){
-      const p1=ll(pts[i][0],pts[i][1]),p2=ll(pts[i+1][0],pts[i+1][1]);
-      for(let s=0;s<=16;s++){const t=s/16;v.push(...new THREE.Vector3().lerpVectors(p1,p2,t).normalize().multiplyScalar(1.005).toArray());}
-    }
-    const g=new THREE.BufferGeometry();
-    g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
-    return new THREE.Line(g,new THREE.LineBasicMaterial({color,transparent:true,opacity}));
-  }
+/* ═══════════════════════════════════════════════════
+   UI INIT — exact AT fade-in timing
+═══════════════════════════════════════════════════ */
+// Chat appears after intro ring exits
+setTimeout(()=>{
+  const cw=document.querySelector('.ChatDOM .wrapper');
+  cw.style.display='flex';
+  requestAnimationFrame(()=>{ cw.style.opacity='1'; });
+},3200);
 
-  const CONT=[
-    {p:[[65,-80],[68,-40],[72,0],[75,40],[70,80],[65,80],[60,40],[62,0],[60,-40],[62,-80],[65,-80]],c:0x88bbff,o:0.55},
-    {p:[[46,-154],[52,-140],[56,-127],[50,-119],[43,-124],[39,-138],[43,-152],[46,-154]],c:0xaa44cc,o:0.65},
-    {p:[[46,122],[52,135],[56,148],[50,155],[43,150],[39,136],[43,124],[46,122]],c:0xff5500,o:0.60},
-    {p:[[33,-22],[35,-4],[30,15],[22,18],[16,8],[19,-18],[27,-22],[33,-22]],c:0xc9a84c,o:0.80},
-    {p:[[30,-75],[34,-55],[30,-40],[18,-42],[15,-60],[20,-74],[30,-75]],c:0x888888,o:0.55},
-    {p:[[30,38],[34,55],[30,72],[18,74],[15,58],[20,40],[30,38]],c:0x33bb55,o:0.55},
-    {p:[[6,-88],[3,-80],[0,-74],[-2,-80],[0,-88],[6,-88]],c:0x0099cc,o:0.50},
-    {p:[[3,-96],[-2,-90],[-4,-84],[0,-83],[3,-90],[3,-96]],c:0x0099cc,o:0.38},
-    {p:[[8,-93],[4,-88],[2,-84],[5,-80],[9,-86],[8,-93]],c:0x0099cc,o:0.30},
-    {p:[[5,-22],[8,-4],[5,18],[-6,20],[-16,10],[-12,-18],[-4,-24],[5,-22]],c:0xffcc44,o:0.55},
-    {p:[[13,62],[17,80],[13,100],[3,102],[-4,88],[2,65],[13,62]],c:0xaa44cc,o:0.50},
-    {p:[[23,115],[27,128],[23,142],[13,145],[8,132],[16,118],[23,115]],c:0x44aaff,o:0.55},
-  ];
-  CONT.forEach(c=>globeG.add(makeLine(c.p,c.c,c.o)));
+// Music player
+setTimeout(()=>{
+  document.querySelector('.MusicPlayerDOM .wrapper').style.opacity='0.8';
+},3500);
 
-  const dotG=new THREE.SphereGeometry(0.016,8,8);
-  [{lat:70,lng:0,c:0x88bbff},{lat:49,lng:-138,c:0xaa44cc},{lat:50,lng:138,c:0xff5500},
-   {lat:25,lng:-4,c:0xc9a84c},{lat:24,lng:-58,c:0x888888},{lat:24,lng:57,c:0x33bb55},
-   {lat:2,lng:-86,c:0x0099cc},{lat:-5,lng:-2,c:0xffcc44},{lat:7,lng:82,c:0xaa44cc},{lat:18,lng:130,c:0x44aaff}
-  ].forEach(d=>{
-    const pos=ll(d.lat,d.lng,1.012);
-    const dot=new THREE.Mesh(dotG,new THREE.MeshBasicMaterial({color:d.c,transparent:true,opacity:0.9}));
-    dot.position.copy(pos); globeG.add(dot);
-    const halo=new THREE.Mesh(new THREE.RingGeometry(0.026,0.029,32),new THREE.MeshBasicMaterial({color:d.c,transparent:true,opacity:0.35,side:THREE.DoubleSide}));
-    halo.position.copy(pos); halo.lookAt(0,0,0); globeG.add(halo);
-  });
-
-  /* rings */
-  function mkRing(i,o,c,op,rx,rz){
-    const m=new THREE.Mesh(new THREE.RingGeometry(i,o,256),new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:op,side:THREE.DoubleSide}));
-    m.rotation.x=rx; m.rotation.z=rz; return m;
-  }
-  const rG=new THREE.Group();
-  const R1=mkRing(1.18,1.182,0xc9a84c,0.42,Math.PI/2.1,0.15);
-  const R2=mkRing(1.30,1.302,0x8b0000,0.24,Math.PI/3.0,Math.PI/5);
-  const R3=mkRing(1.46,1.462,0xc9a84c,0.15,Math.PI/4.0,Math.PI/4);
-  const R4=mkRing(1.63,1.632,0x343755,0.20,Math.PI/6.0,Math.PI/3.5);
-  const R5=mkRing(1.82,1.821,0x8b0000,0.09,Math.PI/2.8,Math.PI/2.5);
-  rG.add(R1,R2,R3,R4,R5); scene.add(rG);
-
-  /* particles */
-  const PC=3500, pP=new Float32Array(PC*3), pC=new Float32Array(PC*3);
-  for(let i=0;i<PC;i++){
-    const r=1.8+Math.pow(Math.random(),0.4)*2.8,t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1);
-    pP[i*3]=r*Math.sin(p)*Math.cos(t); pP[i*3+1]=r*Math.cos(p); pP[i*3+2]=r*Math.sin(p)*Math.sin(t);
-    const rnd=Math.random();
-    if(rnd<0.55){pC[i*3]=0.79+Math.random()*0.12;pC[i*3+1]=0.50+Math.random()*0.20;pC[i*3+2]=0.10+Math.random()*0.15;}
-    else if(rnd<0.78){pC[i*3]=0.55+Math.random()*0.25;pC[i*3+1]=0.01*Math.random();pC[i*3+2]=0;}
-    else{pC[i*3]=0.15+Math.random()*0.15;pC[i*3+1]=0;pC[i*3+2]=0.35+Math.random()*0.30;}
-  }
-  const pGeo=new THREE.BufferGeometry();
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pP,3));
-  pGeo.setAttribute('color',new THREE.BufferAttribute(pC,3));
-  const ptcl=new THREE.Points(pGeo,new THREE.PointsMaterial({size:0.022,vertexColors:true,transparent:true,opacity:0.65,sizeAttenuation:true}));
-  scene.add(ptcl);
-
-  /* lighting */
-  scene.add(new THREE.AmbientLight(0x0a0a14,3));
-  const L1=new THREE.PointLight(0xc9a84c,1.2,20); L1.position.set(3,2,3); scene.add(L1);
-  scene.add(new THREE.PointLight(0x8b0000,0.6,12)).position.set(-3,-2,-3);
-
-  /* mouse */
-  let mX=0,mY=0,cX=0,cY=0;
-  document.addEventListener('mousemove',e=>{mX=(e.clientX/W()-.5);mY=(e.clientY/H()-.5);});
-  document.addEventListener('touchmove',e=>{if(e.touches[0]){mX=(e.touches[0].clientX/W()-.5);mY=(e.touches[0].clientY/H()-.5);}},{passive:true});
-
-  /* tick */
-  const clock=new THREE.Clock();
-  (function tick(){
-    requestAnimationFrame(tick);
-    const t=clock.getElapsedTime();
-    globeG.rotation.y+=0.0006;
-    cX+=(mY*.35-cX)*.04; cY+=(mX*.35-cY)*.04;
-    globeG.rotation.x=cX;
-    R1.rotation.y+=.003; R2.rotation.x+=.0018; R3.rotation.z+=.0022; R4.rotation.y-=.0016; R5.rotation.x-=.001;
-    rG.rotation.x=mY*.18; rG.rotation.y=mX*.18;
-    ptcl.rotation.y+=.0002; ptcl.rotation.x=mY*.06;
-    L1.position.x=Math.sin(t*.28)*3.5; L1.position.z=Math.cos(t*.28)*3.5;
-    camera.position.x+=(mX*.25-camera.position.x)*.025;
-    camera.position.y+=(-mY*.20-camera.position.y)*.025;
-    camera.lookAt(0,0,0);
-    renderer.render(scene,camera);
-  })();
-
-  /* ── INIT UI — exact AT fade-in pattern ───────────────────── */
+// Cookie
+if(!localStorage.getItem('roew_cookie')){
   setTimeout(()=>{
-    const chatWrapper = document.querySelector('.ChatDOM .wrapper');
-    chatWrapper.style.display = 'flex';
-    requestAnimationFrame(()=>{
-      chatWrapper.style.opacity = '1';
-    });
-  }, 800);
+    const cb=document.querySelector('.CookieBanner');
+    const cw=document.querySelector('.CookieBanner .wrapper');
+    cb.style.display='block';
+    requestAnimationFrame(()=>{ cw.style.opacity='1'; });
+  },5000);
+}
 
+/* ═══════════════════════════════════════════════════
+   CHAT LOGIC
+═══════════════════════════════════════════════════ */
+const textarea=document.querySelector('.ChatDOM textarea');
+const flashing=document.querySelector('.ChatDOM .flashing');
+const messages=document.querySelector('.ChatDOM .messages');
+
+const RESP={
+  world:  ['→ ten continents. each one a different war.','→ avaloria. frostpeak. shadowvale. windspire.','click to enter and explore →'],
+  races:  ['→ six races. six ways to wage war.','→ humans. elves. dwarves. ogres. mermen. harpies.','orbiting above — watch them turn.'],
+  lore:   ['→ the chronicles of aethelgard.','what the historians believe happened.','and what they could not bring themselves to write.'],
+  follow: ['→ @realms_of_eternal_war','every post is a chapter.','instagram — follow the build →'],
+  win:    ['→ complete and utter dominance.','the last independent power standing.','there is no second place.'],
+  castle: ['→ one castle. one world.','walls that conform to terrain.','every fortress unique. none of them safe.'],
+  secret: ['→ ...','four known ways to win.','and one that is not listed anywhere.'],
+  war:    ['→ sixty years. every empire fell.','the great war had no clear cause.','it should have been suspicious.'],
+  help:   ['→ try: world / races / lore / war / castle / win / follow / secret'],
+};
+
+function addMsg(text,isLink,href){
+  const el=document.createElement(isLink?'a':'p');
+  el.textContent=text;
+  if(isLink&&href){el.href=href;el.style.color='#c6c6c6';el.style.fontWeight='700';}
+  messages.insertBefore(el,messages.firstChild);
+}
+
+function process(q){
+  const key=Object.keys(RESP).find(k=>q.toLowerCase().includes(k))||'help';
+  flashing.style.opacity='0.3';
   setTimeout(()=>{
-    const mpWrapper = document.querySelector('.MusicPlayerDOM .wrapper');
-    mpWrapper.style.opacity = '0.8';
-  }, 1500);
+    flashing.style.opacity='0';
+    RESP[key].slice().reverse().forEach((l,i)=>setTimeout(()=>addMsg(l,false,''),i*200));
+  },900);
+}
 
-  if(!localStorage.getItem('roew_cookie')){
-    setTimeout(()=>{
-      const cb = document.querySelector('.CookieBanner');
-      const cbw = document.querySelector('.CookieBanner .wrapper');
-      cb.style.display = 'block';
-      requestAnimationFrame(()=>{ cbw.style.opacity = '1'; });
-    }, 3000);
-  }
+textarea.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){e.preventDefault();const q=textarea.value.trim();if(q){addMsg('> '+textarea.value);textarea.value='';process(q);}}
+});
+textarea.addEventListener('focus',()=>textarea.classList.add('extended'));
+textarea.addEventListener('blur',()=>{if(!textarea.value)textarea.classList.remove('extended');});
 
-  /* ── CHAT LOGIC ────────────────────────────────────────────── */
-  const textarea = document.querySelector('.ChatDOM textarea');
-  const flashing  = document.querySelector('.ChatDOM .flashing');
-  const messages  = document.querySelector('.ChatDOM .messages');
-
-  const RESPONSES = {
-    world:  ['→ ten continents. each one a different war.','→ avaloria. frostpeak. shadowvale. windspire.','hover on the globe to explore. click to enter →'],
-    races:  ['→ six races. six ways to wage war.','→ humans. elves. dwarves. ogres. mermen. harpies.','each shaped by the continent they hold.'],
-    lore:   ['→ the chronicles of aethelgard','what the historians believe happened.','and what they could not bring themselves to write.'],
-    follow: ['→ @realms_of_eternal_war','every post is a chapter. the journey is public.','instagram — follow the build →'],
-    win:    ['→ complete and utter dominance.','the last independent power standing.','there is no second place in aethelgard.'],
-    castle: ['→ one castle. one world.','walls that conform to terrain.','no two fortresses are the same.'],
-    secret: ['→ ...','there are four known ways to win.','and one that is not listed anywhere.'],
-    war:    ['→ sixty years. every empire fell.','the great war had no clear cause.','it should have been suspicious.'],
-    help:   ['→ try: world / races / lore / war / castle / win / follow / secret'],
-  };
-
-  function addMsg(text, isLink, href){
-    const el = document.createElement(isLink ? 'a' : 'p');
-    el.textContent = text;
-    if(isLink && href){ el.href=href; el.style.color='#c6c6c6'; el.style.fontWeight='700'; }
-    messages.insertBefore(el, messages.firstChild);
-  }
-
-  function process(q){
-    const key = Object.keys(RESPONSES).find(k=>q.toLowerCase().includes(k)) || 'help';
-    const lines = RESPONSES[key];
-    flashing.style.opacity = '0.3';
-    setTimeout(()=>{
-      flashing.style.opacity = '0';
-      lines.slice().reverse().forEach((l,i)=>{
-        setTimeout(()=>{
-          const isLink = l.includes('→') && key==='follow';
-          addMsg(l, isLink, isLink?'https://www.instagram.com/realms_of_eternal_war/':'');
-        }, i*200);
-      });
-    }, 900);
-  }
-
-  textarea.addEventListener('keydown', e=>{
-    if(e.key==='Enter'){ e.preventDefault(); const q=textarea.value.trim(); if(q){addMsg('> '+textarea.value);textarea.value='';process(q);}}
+document.querySelectorAll('.ChatDOM .messages a.home').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const action=a.dataset.action||'';
+    addMsg('> '+a.textContent);
+    process(action);
+    const dest={world:'world.html#world',races:'world.html#races',lore:'world.html#lore',follow:'world.html#follow'}[action]||'world.html';
+    setTimeout(()=>{window.location.href=dest;},1400);
   });
-  textarea.addEventListener('focus', ()=>textarea.classList.add('extended'));
-  textarea.addEventListener('blur', ()=>{ if(!textarea.value) textarea.classList.remove('extended'); });
+  a.addEventListener('mouseover',()=>a.classList.add('active'));
+  a.addEventListener('mouseout',()=>a.classList.remove('active'));
+});
 
-  /* chat option links */
-  document.querySelectorAll('.ChatDOM .messages a.home').forEach(a=>{
-    a.addEventListener('click', e=>{
-      e.preventDefault();
-      const action = a.dataset.action || '';
-      const href = action==='follow'?'world.html#follow':action==='lore'?'world.html#lore':action==='races'?'world.html#races':'world.html#world';
-      addMsg('> '+a.textContent);
-      process(action);
-      setTimeout(()=>{ window.location.href=href; }, 1200);
-    });
-    a.addEventListener('mouseover',()=>a.classList.add('active'));
-    a.addEventListener('mouseout', ()=>a.classList.remove('active'));
-  });
+/* ── MUSIC ── */
+const TRACKS=['1. War of Aethelgard','2. Shadowvale Drift','3. The Frozen North','4. Ember March','5. The Fifth Path'];
+let ti=0;
+function setTrack(i){ti=(i+TRACKS.length)%TRACKS.length;['tickerItem0','tickerItem1'].forEach(id=>{const el=document.querySelector('.MusicPlayerDOM .'+id);if(el)el.textContent=TRACKS[ti];});}
+document.querySelector('.MusicPlayerDOM .arrowL').addEventListener('click',()=>setTrack(ti-1));
+document.querySelector('.MusicPlayerDOM .arrowR').addEventListener('click',()=>setTrack(ti+1));
 
-  /* ── MUSIC PLAYER ──────────────────────────────────────────── */
-  const TRACKS = [
-    '1. War of Aethelgard',
-    '2. Shadowvale Drift',
-    '3. The Frozen North',
-    '4. Ember March',
-    '5. The Fifth Path',
-  ];
-  let trackIdx = 0;
-
-  function setTrack(i){
-    trackIdx = (i+TRACKS.length)%TRACKS.length;
-    ['tickerItem0','tickerItem1'].forEach(id=>{
-      const el=document.querySelector('.MusicPlayerDOM .'+id);
-      if(el) el.textContent=TRACKS[trackIdx];
-    });
-  }
-
-  document.querySelector('.MusicPlayerDOM .arrowL').addEventListener('click',()=>setTrack(trackIdx-1));
-  document.querySelector('.MusicPlayerDOM .arrowR').addEventListener('click',()=>setTrack(trackIdx+1));
-
-  /* ── COOKIE ────────────────────────────────────────────────── */
-  const cbw=document.querySelector('.CookieBanner .wrapper');
-  document.querySelector('.CookieBanner .accept').addEventListener('click',()=>{
-    localStorage.setItem('roew_cookie','1');
-    cbw.style.opacity='0';
-    setTimeout(()=>document.querySelector('.CookieBanner').style.display='none',400);
-  });
-  document.querySelector('.CookieBanner .reject').addEventListener('click',()=>{
-    localStorage.setItem('roew_cookie','0');
-    cbw.style.opacity='0';
-    setTimeout(()=>document.querySelector('.CookieBanner').style.display='none',400);
-  });
+/* ── COOKIE ── */
+const cbw=document.querySelector('.CookieBanner .wrapper');
+document.querySelector('.CookieBanner .accept').addEventListener('click',()=>{localStorage.setItem('roew_cookie','1');cbw.style.opacity='0';setTimeout(()=>document.querySelector('.CookieBanner').style.display='none',400);});
+document.querySelector('.CookieBanner .reject').addEventListener('click',()=>{localStorage.setItem('roew_cookie','0');cbw.style.opacity='0';setTimeout(()=>document.querySelector('.CookieBanner').style.display='none',400);});
 
 })();
 </script>
