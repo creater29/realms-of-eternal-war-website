@@ -300,117 +300,87 @@ window.addEventListener('resize',()=>{
 /* ═══════════════════════════════════════════════════
    BONE / SPINE STRUCTURE — centre piece
 ═══════════════════════════════════════════════════ */
-/* — REAL SPINE MESH (extracted from Active Theory's spine.bin, decoded via Draco) — */
-function loadSpineMesh(url, onLoad){
-  fetch(url).then(r=>r.arrayBuffer()).then(buf=>{
-    const dv = new DataView(buf);
-    let off = 0;
-    const numVerts = dv.getUint32(off, true); off += 4;
-    const numIndices = dv.getUint32(off, true); off += 4;
-
-    const position = new Float32Array(buf, off, numVerts*3); off += numVerts*3*4;
-    const normal   = new Float32Array(buf, off, numVerts*3); off += numVerts*3*4;
-    const uv       = new Float32Array(buf, off, numVerts*2); off += numVerts*2*4;
-    const index    = new Uint32Array(buf, off, numIndices);
-
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(position.slice(), 3));
-    geo.setAttribute('normal',   new THREE.BufferAttribute(normal.slice(), 3));
-    geo.setAttribute('uv',       new THREE.BufferAttribute(uv.slice(), 2));
-    geo.setIndex(new THREE.BufferAttribute(index.slice(), 1));
-    geo.computeBoundingSphere();
-    onLoad(geo);
-  }).catch(err=>{
-    console.warn('Spine mesh failed to load, falling back to procedural rod:', err);
-    onLoad(null);
-  });
-}
-
-/* — Iridescent holographic chrome shader (matches AT's color-shifting bone material) — */
-const spineShaderMat = new THREE.ShaderMaterial({
-  uniforms: {
-    uTime: { value: 0 },
-    uColorA: { value: new THREE.Color(0xc9a84c) },
-    uColorB: { value: new THREE.Color(0x8b0000) },
-    uColorC: { value: new THREE.Color(0x4488ff) },
-  },
-  vertexShader: `
-    varying vec3 vNormal;
-    varying vec3 vViewDir;
-    varying vec2 vUv;
-    void main(){
-      vNormal = normalize(normalMatrix * normal);
-      vec4 worldPos = modelViewMatrix * vec4(position,1.0);
-      vViewDir = normalize(-worldPos.xyz);
-      vUv = uv;
-      gl_Position = projectionMatrix * worldPos;
-    }
-  `,
-  fragmentShader: `
-    uniform float uTime;
-    uniform vec3 uColorA;
-    uniform vec3 uColorB;
-    uniform vec3 uColorC;
-    varying vec3 vNormal;
-    varying vec3 vViewDir;
-    varying vec2 vUv;
-    void main(){
-      float fresnel = pow(1.0 - max(dot(normalize(vNormal), normalize(vViewDir)), 0.0), 2.2);
-      float shift = sin(vUv.y*14.0 + uTime*0.6) * 0.5 + 0.5;
-      float shift2 = cos(vUv.x*9.0 - uTime*0.4) * 0.5 + 0.5;
-      vec3 iridescent = mix(uColorA, uColorB, shift);
-      iridescent = mix(iridescent, uColorC, shift2*0.4);
-      vec3 base = vec3(0.02,0.02,0.035);
-      vec3 col = mix(base, iridescent, fresnel*0.9 + 0.12);
-      gl_FragColor = vec4(col, 1.0);
-    }
-  `
-});
-
 const boneGroup = new THREE.Group();
 scene.add(boneGroup);
 
-/* Fallback procedural rod shown instantly; swapped for real mesh once it loads */
-const fallbackSpineGeo = new THREE.CylinderGeometry(0.10,0.10,3.2,12);
-const fallbackSpineMesh = new THREE.Mesh(fallbackSpineGeo, spineShaderMat);
-boneGroup.add(fallbackSpineMesh);
+/* — vertical spine rod — */
+const spineGeo = new THREE.CylinderGeometry(0.012,0.012,3.2,8);
+const spineMat = new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.35});
+boneGroup.add(new THREE.Mesh(spineGeo,spineMat));
 
-let realSpineMesh = null;
-loadSpineMesh('assets/geometry/spine.bin', (geo)=>{
-  if(!geo) return; // keep fallback
-  boneGroup.remove(fallbackSpineMesh);
-  realSpineMesh = new THREE.Mesh(geo, spineShaderMat);
-  // Active Theory's source mesh is small/local-space (~0.28 units); scale + orient to fill the same
-  // vertical extent the fallback rod occupied (~3.2 units tall along Y).
-  realSpineMesh.geometry.computeBoundingBox();
-  const bb = realSpineMesh.geometry.boundingBox;
-  const meshHeight = bb.max.y - bb.min.y || 0.3;
-  const targetHeight = 3.2;
-  const scale = targetHeight / meshHeight;
-  realSpineMesh.scale.setScalar(scale);
-  realSpineMesh.position.y = -((bb.min.y+bb.max.y)/2)*scale;
-  boneGroup.add(realSpineMesh);
-});
+/* — spine glow (soft tube around spine) — */
+const spineGlowGeo = new THREE.CylinderGeometry(0.04,0.04,3.0,16);
+const spineGlowMat = new THREE.MeshBasicMaterial({color:0xc9a84c,transparent:true,opacity:0.05,side:THREE.BackSide});
+boneGroup.add(new THREE.Mesh(spineGlowGeo,spineGlowMat));
 
 /* — core at origin (double octahedron) — */
 const coreGroup = new THREE.Group();
+// Solid dark inner
 coreGroup.add(new THREE.Mesh(
   new THREE.OctahedronGeometry(0.30,0),
   new THREE.MeshPhongMaterial({color:0x03030a,emissive:0x0c0c28,shininess:200,specular:0x8888ff,transparent:true,opacity:0.95})
 ));
+// Gold wireframe shell
 coreGroup.add(new THREE.Mesh(
   new THREE.OctahedronGeometry(0.32,0),
   new THREE.MeshBasicMaterial({color:0xc9a84c,wireframe:true,transparent:true,opacity:0.55})
 ));
+// Outer glow
 coreGroup.add(new THREE.Mesh(
   new THREE.SphereGeometry(0.55,16,16),
   new THREE.MeshBasicMaterial({color:0xc9a84c,transparent:true,opacity:0.038,side:THREE.BackSide})
 ));
+// Second glow layer
 coreGroup.add(new THREE.Mesh(
   new THREE.SphereGeometry(0.80,16,16),
   new THREE.MeshBasicMaterial({color:0xc9a84c,transparent:true,opacity:0.012,side:THREE.BackSide})
 ));
 boneGroup.add(coreGroup);
+
+/* — vertebrae nodes along spine — */
+const vertebraeY = [-1.20,-0.78,-0.38, 0.38, 0.78, 1.20];
+vertebraeY.forEach((y,i)=>{
+  const isUpper = y>0;
+  const color  = isUpper ? 0xc9a84c : 0x8b0000;
+  const size   = 0.072 - Math.abs(y)*0.012;
+
+  // Diamond node
+  const node = new THREE.Mesh(
+    new THREE.OctahedronGeometry(size,0),
+    new THREE.MeshBasicMaterial({color,transparent:true,opacity:0.75})
+  );
+  node.position.y = y;
+  node.rotation.y = i*0.8;
+  boneGroup.add(node);
+
+  // Disc ring at each vertebra
+  const discR = 0.18 + Math.abs(y)*0.12;
+  const disc = new THREE.Mesh(
+    new THREE.RingGeometry(discR, discR+0.009, 80),
+    new THREE.MeshBasicMaterial({
+      color: isUpper?0xc9a84c:0x8b0000,
+      transparent:true, opacity:0.30+Math.abs(y)*0.05,
+      side:THREE.DoubleSide
+    })
+  );
+  disc.position.y = y;
+  disc.rotation.x = Math.PI/2;
+  disc.rotation.z = i*0.4;
+  boneGroup.add(disc);
+
+  // Thin rib lines from node outward
+  const ribCount = isUpper ? 4 : 3;
+  for(let r=0;r<ribCount;r++){
+    const ang = (r/ribCount)*Math.PI*2 + i*0.5;
+    const len = discR*1.3;
+    const verts = new Float32Array([0,y,0, Math.cos(ang)*len,y,Math.sin(ang)*len]);
+    const ribGeo = new THREE.BufferGeometry();
+    ribGeo.setAttribute('position',new THREE.BufferAttribute(verts,3));
+    boneGroup.add(new THREE.Line(ribGeo,
+      new THREE.LineBasicMaterial({color,transparent:true,opacity:0.25})
+    ));
+  }
+});
 
 /* — outer orbital rings (the AT-style large rings around bone) — */
 function mkRing(inner,outer,color,opacity,rx,rz){
@@ -571,7 +541,6 @@ const clock=new THREE.Clock();
   const t=clock.getElapsedTime();
 
   // Bone structure — slow breathe + rotate
-  spineShaderMat.uniforms.uTime.value = t;
   boneGroup.rotation.y += 0.0022;
   boneGroup.rotation.x = Math.sin(t*0.18)*0.04;
 
